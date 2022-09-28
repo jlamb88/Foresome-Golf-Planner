@@ -14,24 +14,24 @@ var zipCode = "30076"
 
 console.log('Inside script.js');
 //c530c463eb236ecc331331c6c541cb4c315ecb3
-fetch('https://api.geocod.io/v1.7/geocode?q='+zipCode+'&api_key='+api_key+'')
-.then(response => {
-    console.log('Response object looks like', response);
+fetch('https://api.geocod.io/v1.7/geocode?q=' + zipCode + '&api_key=' + api_key + '')
+    .then(response => {
+        console.log('Response object looks like', response);
 
-    var parsedData = response.json();
-    console.log('parsedData looks like', parsedData);
-    return parsedData;
-})
-.then( maybeData => {
-    console.log('maybeData', maybeData);
+        var parsedData = response.json();
+        console.log('parsedData looks like', parsedData);
+        return parsedData;
+    })
+    .then(maybeData => {
+        console.log('maybeData', maybeData);
 
-    userLat = maybeData.results[0].location.lat;
-    userLong = maybeData.results[0].location.lng;
-    console.log(userLat, userLong);
+        userLat = maybeData.results[0].location.lat;
+        userLong = maybeData.results[0].location.lng;
+        console.log(userLat, userLong);
 
-   
 
-} )
+
+    })
 
 //Charlee note: rename all variables and formatting once the HTML is built
 searchBtn.click(saveSearch);
@@ -107,3 +107,130 @@ function showPrevCity(event) {
     // getAPI();
     // runFuture()
 }
+var today = moment();
+$("#todayDate").text(today.format("dddd, MMMM Do YYYY"));
+$("#tomorrowDate").text(moment().add([1], 'days').format('dddd, MMMM Do YYYY'))
+var saveBtnEl = $("#scheduleContainer")
+//now we are looking for a single click on any button
+saveBtnEl.on("click", "button", saveEvent)
+//we create an empty array with the length of 9
+if (!localStorage.getItem("mySavedEvents")) {
+    var savedEvents = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+} else {
+    var savedEvents = JSON.parse(localStorage.getItem("mySavedEvents"))
+}
+function saveEvent(event) {
+    event.preventDefault()
+    //now we prevent default and the new variable newInput will reference the previousElementSibling of pressed button
+    var newInput = event.target.previousElementSibling
+    // now we want to use switch to determine what the data-num was, and log the input in the aprorpriate cell of the array
+    switch (newInput.dataset.num) {
+        case "1":
+            savedEvents[0] = newInput.value;
+            break;
+        case "2":
+            savedEvents[1] = newInput.value;
+            break;
+        case "3":
+            savedEvents[2] = newInput.value;
+            break;
+        case "4":
+            savedEvents[3] = newInput.value;
+            break;
+        case "5":
+            savedEvents[4] = newInput.value;
+            break;
+        case "6":
+            savedEvents[5] = newInput.value;
+            break;
+        case "7":
+            savedEvents[6] = newInput.value;
+            break;
+        case "8":
+            savedEvents[7] = newInput.value;
+            break;
+        case "9":
+            savedEvents[8] = newInput.value;
+            break;
+        case "10":
+            savedEvents[9] = newInput.value;
+            break;
+        case "11":
+            savedEvents[10] = newInput.value;
+            break;
+        case "12":
+            savedEvents[11] = newInput.value;
+            break;
+        case "13":
+            savedEvents[12] = newInput.value;
+            break;
+        case "14":
+            savedEvents[13] = newInput.value;
+            break;
+        case "15":
+            savedEvents[14] = newInput.value;
+            break;
+        case "16":
+            savedEvents[15] = newInput.value;
+            break;
+        case "17":
+            savedEvents[16] = newInput.value;
+            break;
+        case "18":
+            savedEvents[17] = newInput.value;
+            break;
+        case "19":
+            savedEvents[18] = newInput.value;
+            break;
+        case "20":
+            savedEvents[19] = newInput.value;
+            break;
+        case "21":
+            savedEvents[20] = newInput.value;
+            break;
+        case "22":
+            savedEvents[21] = newInput.value;
+            break;
+        case "23":
+            savedEvents[22] = newInput.value;
+            break;
+        case "24":
+            savedEvents[23] = newInput.value;
+            break;
+        case "25":
+            savedEvents[24] = newInput.value;
+            break;
+        case "26":
+            savedEvents[25] = newInput.value;
+            break;
+        case "27":
+            savedEvents[26] = newInput.value;
+            break;
+
+    }
+    //now we want to save it in our local storage
+    localStorage.setItem("mySavedEvents", JSON.stringify(savedEvents));
+    //and render it 
+    render();
+}
+//this will call all of our time blocks
+allInput = $(".time-block")
+console.log(allInput)
+
+function render() {
+
+    //lets get our items from the local storage
+
+    //for the length of the buttons (all buttons) we will loop here
+    for (a = 0; a < allInput.length; a++) {
+        //if the cell is null let's make it blank
+        // if (savedEvents[a] === null) {
+        //     savedEvents[a] = ' ';
+        // }
+        console.log(savedEvents[a])
+        //and lets put those values in the input boxes
+        allInput[a].value = savedEvents[a]
+    }
+}
+//display everything by calling the init 
+render()
