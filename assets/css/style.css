@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #d9dcd6;
+}
+
+header {
+    height:300px;
+    width: 100%;
+    font-family: Arial, Helvetica, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', sans-serif;
+    background-color: #153a18;
+    color: #ffffff;
+    background-size: cover;
+    object-fit: fill;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+p {
+    font-size: 16px;
+}
+
+.carousel-inner, .carousel-item.active {
+    height:300px;
+    display: flex;
+    object-fit: cover;
+}
+
+.float-left {
+    float: left;
+    margin-right: 25px;
+}
+
+.float-right {
+    float: right;
+    margin-left: 25px;
+}
+
+
+.footer {
+    padding: 30px;
+    clear: both;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+}
+
+.footer h2 {
+    font-size: 20px;
+}
+
+@media screen and (max-width: 768px)
