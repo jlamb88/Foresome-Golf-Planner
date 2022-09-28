@@ -6,12 +6,13 @@ var weatherTracker = {
         .then((data) => console.log(data));
     }
 
-    Display: function (data) {
+    forecastDisplay: function (data) {
         var { name } = data;
         var { speed } = data.wind;
         var { description, icon } = data.weather;
         var { humidity, temp } = data.main;
         console.log(name, temp, description, icon, humidity, speed);
+    
     },
  
  
