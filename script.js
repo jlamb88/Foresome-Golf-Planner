@@ -1,75 +1,80 @@
+var srchRadius = 10;
+var geoLat = 33.749;
+var geoLng = -84.38798;
+var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius="+srchRadius+"&lat="+geoLat+"&lng="+geoLng
 
-var searchBtn = $("#searchBtn")
+// const courses = {
+// 	"async": true,
+// 	"crossDomain": true,
+// 	"url": passURL,
+// 	"method": "GET",
+// 	"headers": {
+// 		"X-RapidAPI-Key": "913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277",
+// 		"X-RapidAPI-Host": "golf-course-finder.p.rapidapi.com"
+// 	}
+// };
 
-//Charlee note: rename all variables and formatting once the HTML is built
-searchBtn.click(saveSearch);
-cityContainter.on("click", "button", showPrevCity);
-function init() {
-    //when the page loads we hide the weather display since they have yet to search for things
-    //we also will call down items from local storage, and then we will render the cities
-    weatherContainer.style.visibility = "hidden";
+// $.ajax(courses).done(function (response) {
+// 	console.log(response);
+// });
 
-    if (!localStorage.getItem("mySavedCities")) {
-        prevCities = [];
-    } else {
-        prevCities = JSON.parse(localStorage.getItem("mySavedCities"));
-    }
-    renderCities();
-}
+// const settings = {
+// 	"async": true,
+// 	"crossDomain": true,
+// 	"url": "https://golf-course-finder.p.rapidapi.com/courses?radius=10&lat=36.56910381018662&lng=-121.95035631683683",
+// 	"method": "GET",
+// 	"headers": {
+// 		"X-RapidAPI-Key": "913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277",
+// 		"X-RapidAPI-Host": "golf-course-finder.p.rapidapi.com"
+// 	}
+// };
 
-async function saveSearch(event) {
-    //when we save we don't want something to be removed from the search bar
-    event.preventDefault();
-    //now we want to save the data and also send the data to an array and display it
-    var cityText = inputEl.value.trim();
-    if (cityText !== "") {
-        prevCities.push(cityText);
-    }
-    city = cityText;
-    //We want to clear these variables so that they are empty if we call a new city
-    nextForecast = [];
-    futureArray = [];
-    storeCities();
-    renderCities();
-    // getAPI().then(function (res) {
-    // });
-    // runFuture();
+// $.ajax(settings).done(function (response) {
+// 	console.log(response);
+// });
+var srchRadius = 5;
+var geoLat = 33.749;
+var geoLng = -84.38798;
+var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius="+srchRadius+"&lat="+geoLat+"&lng="+geoLng
 
-}
+const listOptions = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+		'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
+	}
+};
 
-function storeCities() {
-    //lets store them locally so when we reload the page they'll still be here
-    localStorage.setItem("mySavedCities", JSON.stringify(prevCities));
-}
-function renderCities() {
-    cityList.innerHTML = "";
+fetch(passURL, listOptions)
+	.then(response => response.json())
+	.then(function(response)
+    {console.log(response);
+    courses = Array.from(response.courses);
+    console.log(courses);
+        return courses})
+    
+    
+const crseOptions = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+            'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
+        }
+    };
+    
+    for (i=0;i<courses.length;i++) {
+    courseNm = courses[i].name;
+    zip = courses[i].zip_code;
+    console.log(courseNm, zip)
 
-    for (var i = 0; i < prevCities.length; i++) {
-        //lets add the all of the previous cities as buttons
-        var searchText = prevCities[i];
 
-        var cityBtn = document.createElement("button");
-        var btnContainer = document.createElement("li");
 
-        cityBtn.text(searchText);
-        cityBtn.classList.add('w-100')
-        btnContainer.append(cityBtn);
-        cityList.append(btnContainer);
-    }
-}
-function extractCity(event) {
-    //if they pick a previously searched city we want to extract whatever information is in the button they selected
-    var cityInput = event.currentTarget.innerHTML;
-    city = cityInput;
-    return city;
-}
-var todayWeather;
-function showPrevCity(event) {
-    //if they want to see a previous city we will first extract the info and then run the same info that would happen if they just search for it
-    extractCity(event);
-    //We want to clear these variables so that they are empty if we call a new city
-    nextForecast = [];
-    futureArray = [];
-    // getAPI();
-    // runFuture()
+
+
+    
+//     fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip='+zip+'&name='+name;
+//     fetch(fetchURL, crseOptions)
+//         .then(response => response.json())
+//         .then(response => console.log(response))
+//         .catch(err => console.error(err));
 }
