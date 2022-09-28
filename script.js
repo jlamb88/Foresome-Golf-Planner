@@ -109,7 +109,8 @@ function showPrevCity(event) {
 }
 var today = moment();
 $("#todayDate").text(today.format("dddd, MMMM Do YYYY"));
-$("#tomorrowDate").text(moment().add([1], 'days').format('dddd, MMMM Do YYYY'))
+$("#tomorrowDate").text(moment().add((1), 'days').format('dddd, MMMM Do YYYY'))
+$('#afterTomorrowDate').text(moment().add((2), 'days').format('dddd, MMMM Do YYYY'))
 var saveBtnEl = $("#scheduleContainer")
 //now we are looking for a single click on any button
 saveBtnEl.on("click", "button", saveEvent)
