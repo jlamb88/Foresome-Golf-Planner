@@ -2,42 +2,54 @@
 <html lang="en-us">
 
 <head>
-<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="Description" content="Enter your description here" />
-<link rel="stylesheet" href="./assets/css/reset.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="./assets/css/style.css">
-<title>Duffers Unite - Your Easy Golf Planner</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <!-- <link rel="stylesheet" href="./assets/css/reset.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
+    <title>Duffers Unite - Your Easy Golf Planner</title>
 </head>
 
 <body>
-<header class="container-fluid">
-    <h1>Header/Splash</h1>
-</header>
+    <header class="container-fluid">
+        <h1 class='text-center'>Header/Splash</h1>
+    </header>
 
-<section class="container">
-    <section class="row">
-        <section class="col-3" id="sidebar">
+    <section class="container m-0">
+        <section class="row">
+            <section class="col-3" id="sidebar">
+                <section class="inputContainer">
+                    <input class="w-100 mb-2" id="cityInput" placeholder="Enter Zipcode" />
+                    <input class="w-100" id="distanceInput" placeholder="Distance from you" />
+                    <button class="w-100 mt-2" id="searchBtn">Search</button>
+                    <ul class="my-2 w-100" id="savedCities">Previous Searches</ul>
+                </section>
+                <!-- <section class="row" id="search-bar">Search</section> -->
 
+            </section>
+            <section class="col-9" id="content">
+                <section class="row" id="weather">Weather</section>
+                <section class="row" id="course-search">Courses</section>
+                <section class="row" id="scheduler">Scheduler</section>
+            </section>
         </section>
-        <section class="col-9" id="content">
-            <section class="row" id="search-bar">Search</section>
-            <section class="row" id="weather">Weather</section>
-            <section class="row" id="course-search">Courses</section>
-            <section class="row" id="scheduler">Scheduler</section>
-        </section>
-    </section>
-    
-    <footer class="footer">
-        <p>
+
+        <footer class="footer">
+            <p>
             <h2>&copy;</h2>
-        </p>
-    </footer>
+            </p>
+        </footer>
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+    integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+    crossorigin="anonymous"></script>
+<script src="script.js"></script>
 
-<script src="./assets/script.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
 </html>
