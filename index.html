@@ -51,14 +51,45 @@
 
       </section>
       <section class="col-9" id="content">
-        <section class="row" id="weather">Weather</section>
+        <h2 class="text-center" id="where">Your Location</h2>
+        <section class="row" id="weatherContainer">
+
+          <div class="col-4 card" id="todayWeather">
+            <div class="container">
+              <h3 class="todayDate"></h3>
+              <img id="todayIcon" src="" alt="weatherIcon">
+              <p id="todayTemp"></p>
+              <p id="todayWind"></p>
+              <p id="todayHumid"></p>
+            </div>
+          </div>
+          <div class="col-4 card" id="tomorrowWeather">
+            <div class="container">
+              <h3 class="tomorrowDate"></h3>
+              <img id="todayIcon" src="" alt="weatherIcon">
+              <p id="todayTemp"></p>
+              <p id="todayWind"></p>
+              <p id="todayHumid"></p>
+            </div>
+          </div>
+          <div class="col-4 card" id="afterTomorrowWeather">
+            <div class="container">
+              <h3 class="afterTomorrowDate"></h3>
+              <img id="todayIcon" src="" alt="weatherIcon">
+              <p id="todayTemp"></p>
+              <p id="todayWind"></p>
+              <p id="todayHumid"></p>
+            </div>
+          </div>
+        </section>
+
         <section class="row" id="course-search">Courses</section>
         <!-- before addition-->
         <h2 class="text-center">Your Schedule</h2>
         <section class="row" id="scheduleContainer">
 
           <section class="col-4" id="todayCalContainter">
-            <p id="todayDate">today</p>
+            <p class="todayDate">today</p>
             <section class="row" id="9">
               <p class="col-2 hour">9AM</p>
               <input data-num="1" class="col-8 time-block" id="9amEvent" />
@@ -106,7 +137,7 @@
             </section>
           </section>
           <section class="col-4" id="tomorrowCalContainter">
-            <p id="tomorrowDate">tomorrow</p>
+            <p class="tomorrowDate">tomorrow</p>
             <section class="row" id="9">
               <p class="col-2 hour">9AM</p>
               <input data-num="10" class="col-8 time-block" id="9amEvent" />
@@ -155,7 +186,7 @@
           </section>
 
           <section class="col-4" id="afterTomCalContainter">
-            <p id="afterTomorrowDate">tomorrow</p>
+            <p class="afterTomorrowDate">tomorrow</p>
             <section class="row" id="9">
               <p class="col-2 hour">9AM</p>
               <input data-num="19" class="col-8 time-block" id="9amEvent" />
@@ -225,4 +256,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
 <script src="script.js"></script>
+
 </html>

@@ -1,12 +1,21 @@
 
 var weatherTracker = {
-    "weatherapi": "ac96e744e22de6b8cf05d8399f7bfdf3",
-    fetchtracker: function(){
-        fetch("https://api.openweathermap.org/data/2.5/weather?q=+city+&metric=imerial&appid=ac96e744e22de6b8cf05d8399f7bfdf3")
-        .then((response) => response.json())
-        .then((data) => this.forecastDisplay(data));
-    },
+    weatherapi: "ac96e744e22de6b8cf05d8399f7bfdf3",
+    fetchtracker: function () {
+        fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "+&units=imerial&appid=" + weatherapi)
+            //city needs to be linked to the golf API
+            .then((response) => response.json())
+            .then((data) => this.forecastDisplay(data));
+        // display: function (data) {
+        //     var { name } = data;
+        //     var { speed } = data.wind;
+        //     var { description, icon } = data.weather[0];
+        //     var { humidity, temp } = data.main;
+        //     console.log(name, temp, description, icon, humidity, speed);
 
+        // }
+    },
+}
 var searchBtn = $('#searchBtn');
 var cityInputEl = $('#cityInput');
 var radInputEl = $('#distanceInput');
@@ -19,46 +28,47 @@ var savedSearched = []
 var srchRadius = 5;
 var geoLat = 33.749;
 var geoLng = -84.38798;
-var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius="+srchRadius+"&lat="+geoLat+"&lng="+geoLng
+var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius=" + srchRadius + "&lat=" + geoLat + "&lng=" + geoLng
 
 const listOptions = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
-		'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
-	}
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+        'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
+    }
 };
 
 var coursesArry = [];
-fetch(passURL, listOptions)
-	.then(response => response.json())
-	.then(function(response)
-    {console.log(response);
-    tempArry = Array.from(response.courses);
-    coursesArry = [];
-    for (i=0;i<tempArry.length;i++) {
-            coursesArry[i].push(tempArry[i])
-        console.log("fetch",coursesArry);}
-        return coursesArry;
-    })
+// fetch(passURL, listOptions)
+//     .then(response => response.json())
+//     .then(function (response) {
+//         console.log(response);
+//         tempArry = Array.from(response.courses);
+//         coursesArry = [];
+//         for (i = 0; i < tempArry.length; i++) {
+//             coursesArry[i].push(tempArry[i])
+//             console.log("fetch", coursesArry);
+//         }
+//         return coursesArry;
+//     })
 
-    console.log("Return",coursesArry)
-    
+console.log("Return", coursesArry)
+
 const crseOptions = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
-            'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
-        }
-    };
-    
-    
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+        'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
+    }
+};
 
 
 
 
 
-    
+
+
+
 //     fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip='+zip+'&name='+name;
 //     fetch(fetchURL, crseOptions)
 //         .then(response => response.json())
@@ -95,6 +105,7 @@ fetch('https://api.geocod.io/v1.7/geocode?q=' + zipCode + '&api_key=' + api_key 
 //Charlee note: rename all variables and formatting once the HTML is built
 searchBtn.click(saveSearch);
 searchContainerEl.on("click", "button", showPrevCity);
+var weatherContainer = $("#weatherContainer")
 function init() {
     //when the page loads we hide the weather display since they have yet to search for things
     //we also will call down items from local storage, and then we will render the cities
@@ -167,9 +178,10 @@ function showPrevCity(event) {
     // runFuture()
 }
 var today = moment();
-$("#todayDate").text(today.format("dddd, MMMM Do YYYY"));
-$("#tomorrowDate").text(moment().add((1), 'days').format('dddd, MMMM Do YYYY'))
-$('#afterTomorrowDate').text(moment().add((2), 'days').format('dddd, MMMM Do YYYY'))
+$(".todayDate").text(today.format("dddd, MMMM Do YYYY"));
+$(".tomorrowDate").text(moment().add((1), 'days').format('dddd, MMMM Do YYYY'))
+$('.afterTomorrowDate').text(moment().add((2), 'days').format('dddd, MMMM Do YYYY'))
+
 var saveBtnEl = $("#scheduleContainer")
 //now we are looking for a single click on any button
 saveBtnEl.on("click", "button", saveEvent)
@@ -295,15 +307,3 @@ function render() {
 //display everything by calling the init 
 render()
 
-    display: function (data) {
-        var { name } = data;
-        var { speed } = data.wind;
-        var { description, icon } = data.weather[0];
-        var { humidity, temp } = data.main;
-        console.log(name, temp, description, icon, humidity, speed);
-        
-    }
- 
- 
-}
-console.log("hello")
