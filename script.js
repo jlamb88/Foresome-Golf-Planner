@@ -27,116 +27,6 @@ fetch('https://api.geocod.io/v1.7/geocode?q='+zipCode+'&api_key='+api_key+'')
 } )
 
 
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 var coursePar = "70"
 var strokes = "85"
@@ -169,7 +59,6 @@ console.log (scorecard)
 console.log (score)
 
 
-=======
 var searchBtn = $("#searchBtn")
 
 //Charlee note: rename all variables and formatting once the HTML is built
@@ -244,4 +133,3 @@ function showPrevCity(event) {
     // getAPI();
     // runFuture()
 }
->>>>>>> 7d5662487b29a782ce99184e86e9caa665611bd1
