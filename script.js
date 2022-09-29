@@ -40,12 +40,18 @@ function scorecard(courseName, strokes, coursePar){
     myScore = {
         course: courseEl.val(),
         //for next two might need parseInt
-        strokes: strokesEl.val(),
-        coursePar: courseEl.val(),
+        strokes: strokesEl.number.parseint(),
+        coursePar: courseEl.number.parseint(),
         score: (strokes - coursePar)
     }
     //build out except by doing && for all arguments
-if ((course!=='')){
+if (score < 0){
+    return -'score'
+}
+
+if ((course!=='')
+    && (strokes !== '')
+    && (coursePar !== '')){
     mySavedScore.push(myScore)
 }
     //lets store the information in local storage
@@ -53,10 +59,11 @@ localStorage.setItem("scoreCard",JSON.stringify(mySavedScore))
 
     return (courseName, score); 
 }
-submitButton.addEventListener("click", function(event) {
+submitButton.addEventListener("click", function(savescore) {
 
 console.log (scorecard)
 console.log (score)
+
 
 
 var searchBtn = $("#searchBtn")
