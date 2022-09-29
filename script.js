@@ -17,3 +17,4 @@ var weatherTracker = {
  
  
 }
+console.log("hello")
