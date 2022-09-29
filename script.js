@@ -12,20 +12,31 @@ const listOptions = {
 	}
 };
 
-var coursesArry = [];
 fetch(passURL, listOptions)
 	.then(response => response.json())
 	.then(function(response)
-    {console.log(response);
-    tempArry = Array.from(response.courses);
-    coursesArry = [];
-    for (i=0;i<tempArry.length;i++) {
-            coursesArry[i].push(tempArry[i])
-        console.log("fetch",coursesArry);}
-        return coursesArry;
-    })
+    {
+        console.log(response);
+    var tempArry = response.courses;
+     //    for (i=0;i<tempArry.length;i++) {
+     //          coursesArry.push(tempArry[i])
+     //    console.log("fetch",coursesArry);
+     //}
 
-    console.log("Return",coursesArry)
+    //  return coursesArry;
+    var distArray = []; //Array of Objects that only contain the name and the zipcode from the first call
+    for(var i = 0; i < tempArry.length; i++) {
+        distArray.push({name: tempArry[i].name, zip_code: tempArry[i].zip_code});
+    }
+
+    var endResults = []; //This will contain the information of the second fetch call
+    for(var i = 0; i < distArray.length; i++) {
+        endResults.push(secondUrlFetchCall(distArray[i]));
+        var distanceP = document.createElement('p');
+        distanceP.textContent = tempArry.courses.distance;
+
+    }
+    })
     
 const crseOptions = {
         method: 'GET',
@@ -35,7 +46,15 @@ const crseOptions = {
         }
     };
     
-    
+function secondUrlFetchCall(input) {
+    var nameQuery = input.name;
+    var zipCodeQuery = input.zip_code;
+    fetch('url').then(function(res) {
+        return res.json();
+    }).then(function(data) {
+        return;
+    })
+}
 
 
 
