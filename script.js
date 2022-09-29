@@ -301,7 +301,7 @@ render()
         var { description, icon } = data.weather[0];
         var { humidity, temp } = data.main;
         console.log(name, temp, description, icon, humidity, speed);
-        document.querySelector("wea 
+        document.querySelector("weather").innerText = 
     }
  
  
