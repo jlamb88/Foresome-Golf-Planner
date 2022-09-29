@@ -28,9 +28,9 @@ fetch('https://api.geocod.io/v1.7/geocode?q='+zipCode+'&api_key='+api_key+'')
 
 
 
-var coursePar = "70"
-var strokes = "85"
-var courseName = "CCR"
+var coursePar = ""
+var strokes = ""
+var courseName = ""
 var courseEl = $('#course')
 var parEl = $('#par')
 var strokesEl =$('#strokes')
@@ -44,9 +44,11 @@ function scorecard(courseName, strokes, coursePar){
         coursePar: courseEl.number.parseint(),
         score: (strokes - coursePar)
     }
-    //build out except by doing && for all arguments
-if (score < 0){
-    return -'score'
+    
+    if (score < 0){
+        return (score + "under par");
+    else (score >= 0)
+        return (score + "over par");
 }
 
 if ((course!=='')
