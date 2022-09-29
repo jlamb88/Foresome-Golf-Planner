@@ -1,37 +1,4 @@
-var srchRadius = 10;
-var geoLat = 33.749;
-var geoLng = -84.38798;
-var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius="+srchRadius+"&lat="+geoLat+"&lng="+geoLng
 
-// const courses = {
-// 	"async": true,
-// 	"crossDomain": true,
-// 	"url": passURL,
-// 	"method": "GET",
-// 	"headers": {
-// 		"X-RapidAPI-Key": "913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277",
-// 		"X-RapidAPI-Host": "golf-course-finder.p.rapidapi.com"
-// 	}
-// };
-
-// $.ajax(courses).done(function (response) {
-// 	console.log(response);
-// });
-
-// const settings = {
-// 	"async": true,
-// 	"crossDomain": true,
-// 	"url": "https://golf-course-finder.p.rapidapi.com/courses?radius=10&lat=36.56910381018662&lng=-121.95035631683683",
-// 	"method": "GET",
-// 	"headers": {
-// 		"X-RapidAPI-Key": "913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277",
-// 		"X-RapidAPI-Host": "golf-course-finder.p.rapidapi.com"
-// 	}
-// };
-
-// $.ajax(settings).done(function (response) {
-// 	console.log(response);
-// });
 var srchRadius = 5;
 var geoLat = 33.749;
 var geoLng = -84.38798;
@@ -45,14 +12,20 @@ const listOptions = {
 	}
 };
 
+var coursesArry = [];
 fetch(passURL, listOptions)
 	.then(response => response.json())
 	.then(function(response)
     {console.log(response);
-    courses = Array.from(response.courses);
-    console.log(courses);
-        return courses})
-    
+    tempArry = Array.from(response.courses);
+    coursesArry = [];
+    for (i=0;i<tempArry.length;i++) {
+            coursesArry[i].push(tempArry[i])
+        console.log("fetch",coursesArry);}
+        return coursesArry;
+    })
+
+    console.log("Return",coursesArry)
     
 const crseOptions = {
         method: 'GET',
@@ -62,10 +35,7 @@ const crseOptions = {
         }
     };
     
-    for (i=0;i<courses.length;i++) {
-    courseNm = courses[i].name;
-    zip = courses[i].zip_code;
-    console.log(courseNm, zip)
+    
 
 
 
@@ -77,4 +47,3 @@ const crseOptions = {
 //         .then(response => response.json())
 //         .then(response => console.log(response))
 //         .catch(err => console.error(err));
-}
