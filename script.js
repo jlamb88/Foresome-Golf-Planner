@@ -28,3 +28,144 @@ fetch('https://api.geocod.io/v1.7/geocode?q='+zipCode+'&api_key='+api_key+'')
 } )
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var coursePar = "70"
+var strokes = "85"
+var courseName = "CCR"
+var courseEl = $('#course')
+var parEl = $('#par')
+var strokesEl =$('#strokes')
+
+function scorecard(courseName, strokes, coursePar){
+
+    myScore = {
+        course: courseEl.val(),
+        //for next two might need parseInt
+        strokes: strokesEl.val(),
+        coursePar: courseEl.val(),
+        score: (strokes - coursePar)
+    }
+    //build out except by doing && for all arguments
+if ((course!=='')){
+    mySavedScore.push(myScore)
+}
+    //lets store the information in local storage
+localStorage.setItem("scoreCard",JSON.stringify(mySavedScore))
+
+    return (courseName, score); 
+}
+submitButton.addEventListener("click", function(event) {
+
+console.log (scorecard)
+console.log (score)
+
+
