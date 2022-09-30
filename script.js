@@ -390,10 +390,6 @@ function render() {
 
     //for the length of the buttons (all buttons) we will loop here
     for (a = 0; a < allInput.length; a++) {
-        //if the cell is null let's make it blank
-        // if (savedEvents[a] === null) {
-        //     savedEvents[a] = ' ';
-        // }
         console.log(savedEvents[a])
         //and lets put those values in the input boxes
         allInput[a].value = savedEvents[a]
@@ -412,8 +408,4 @@ init()
 //     console.log(name, temp, description, icon, humidity, speed);
 
 // }
-
-
-
-console.log("hello")
 
