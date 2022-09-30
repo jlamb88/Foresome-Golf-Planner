@@ -1,4 +1,3 @@
-
 var weatherTracker = {
     weatherapi: "ac96e744e22de6b8cf05d8399f7bfdf3",
     fetchtracker: function () {
@@ -122,14 +121,80 @@ fetch('https://api.geocod.io/v1.7/geocode?q=' + zipCode + '&api_key=' + api_key 
     })
     .then(maybeData => {
         console.log('maybeData', maybeData);
-
         userLat = maybeData.results[0].location.lat;
         userLong = maybeData.results[0].location.lng;
         console.log(userLat, userLong);
+ } )
 
 
 
-    })
+var coursePar = ""
+var strokes = ""
+var course = ""
+var courseEl = $('#course')
+var parEl = $('#par')
+var strokesEl =$('#strokes')
+var scoreContainerEl = $('#scoreContainer')
+var submitButton = $('#submit')
+var mySavedScore = []
+function scorecard(){
+   //lets do the calculation for the score here
+    var score= (strokes - coursePar)
+    if (score < 0){
+        var trueScore = (score + " under par");
+        }
+        else{
+            var trueScore = (score + " over par");
+        }
+    myScore = {
+        course: courseEl.val(),
+        strokes: parseInt(strokesEl.val()),
+        coursePar: parseInt(parEl.val()),
+        score: checkScore(),
+    }
+    console.log(myScore)
+    console.log(typeof myScore.strokes)
+    
+    function checkScore() {
+        var score = parseInt(strokesEl.val())-parseInt(parEl.val());
+        if (score < 0){
+            return score + " under par";
+        }
+        else {
+            return score + " over par";
+        }
+    }
+   
+
+if ((course!=='')
+    && (strokes !== '')
+    && (coursePar !== '')){
+        console.log('was true')
+    mySavedScore.push(myScore)
+
+    storemyScore()
+    rendermyScore()
+}
+
+}
+function storeScore(){
+    localStorage.setItem("scoreCard",JSON.stringify(mySavedScore))
+}
+submitButton.click(scorecard)
+
+function renderScore(){
+    if (!localStorage.getItem("scoreCard")){
+        mySavedScore = ''
+    }else {mySavedScore = JSON.parse(localStorage.getItem("scoreCard"))}
+for (var i=0;i<mySavedScore.length;i++){
+    var scoreText = ("course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].trueScoreEl )
+    var scoreList = $("<li></li>")
+    scoreList.text(scoreText);
+    scoreList.addClass('w-100');
+    scoreContainerEl.append(scoreList)
+}
+}
+submitButton.click(scorecard)
 
 //Charlee note: rename all variables and formatting once the HTML is built
 searchBtn.click(saveSearch);
