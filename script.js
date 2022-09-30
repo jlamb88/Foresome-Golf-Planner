@@ -44,7 +44,7 @@ const listOptions = {
         'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
     }
 };
-function golfAPI() {
+function golfAPI(res) {
     var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius=" + srchRadius + "&lat=" + userLat + "&lng=" + userLong
 
     console.log("golfAPI running")
@@ -110,7 +110,7 @@ var api_key = "c530c463eb236ecc331331c6c541cb4c315ecb3"
 
 console.log('Inside script.js');
 //c530c463eb236ecc331331c6c541cb4c315ecb3
-function geoAPI() {
+async function geoAPI() {
     console.log("geoAPI Running")
     let geo = fetch('https://api.geocod.io/v1.7/geocode?q=' + zipCode + '&api_key=' + api_key + '')
         .then(response => {
@@ -127,7 +127,7 @@ function geoAPI() {
             // console.log(userLat, userLong);
             return userLat, userLong
         })
-    golfAPI(geo)
+    return geo
 }
 var coursePar = ""
 var strokes = ""
@@ -379,15 +379,20 @@ searchBtn.click(searchResults);
 var weatherContainer = $("#weatherContainer")
 function searchResults(event) {
     saveSearch(event)
-    geoAPI()
+    geoAPI().then(function (res) {
+        golfAPI(res);
+        console.log(userLat)
+        console.log(userLong)
+    })
 }
 
 function prevSearchResults(event) {
     extractCity(event)
-    geoAPI()
-    console.log(userLat)
-    console.log(userLong)
-    golfAPI()
+    geoAPI().then(function (res) {
+        golfAPI(res);
+        console.log(userLat)
+        console.log(userLong)
+    })
 }
 
 // display: function (data) {
