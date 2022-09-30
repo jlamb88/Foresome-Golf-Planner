@@ -23,19 +23,19 @@ var prevDistance;
 var savedSearched = []
 
 // for (i=0;i<tempArry.length;i++) {
-    //          coursesArry.push(tempArry[i])
-    //    console.log("fetch",coursesArry);
-    //}
+//          coursesArry.push(tempArry[i])
+//    console.log("fetch",coursesArry);
+//}
 
-   //  return coursesArry;
-   // var distArray = []; //Array of Objects that only contain the name and the zipcode from the first call
-   // for(var i = 0; i < tempArry.length; i++) {
-   //     distArray.push({name: tempArry[i].name, zip_code: tempArry[i].zip_code});
+//  return coursesArry;
+// var distArray = []; //Array of Objects that only contain the name and the zipcode from the first call
+// for(var i = 0; i < tempArry.length; i++) {
+//     distArray.push({name: tempArry[i].name, zip_code: tempArry[i].zip_code});
 
 var srchRadius = 5;
 var userLat = 33.749;
 var userLong = -84.38798;
-var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius="+srchRadius+"&lat="+userLat+"&lng="+userLong
+var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius=" + srchRadius + "&lat=" + userLat + "&lng=" + userLong
 
 
 const listOptions = {
@@ -47,41 +47,37 @@ const listOptions = {
 };
 
 fetch(passURL, listOptions)
-	.then(response => response.json())
-	.then(function(response)
+    .then(response => response.json())
+    .then(function (response) {
+        var coursesList = response.courses;
+        console.log("first fetch", coursesList)
+        var endResults = []; //This will contain the information of the second fetch call
+        for (var i = 0; i < coursesList.length; i++) {
+            var courseObj = { "name": coursesList[i].name, "distance": coursesList[i].distance }
+            endResults.push(secondUrlFetchCall(coursesList[i]));
+            console.log(endResults);
+            var distanceP = document.createElement('p');
+            distanceP.textContent = coursesList.distance;
+        }
+
+        function secondUrlFetchCall(input) {
+            console.log(input);
+            const crseOptions =
             {
-            var coursesList = response.courses;
-            console.log("first fetch", coursesList)
-            var endResults = []; //This will contain the information of the second fetch call
-            for(var i = 0; i < coursesList.length; i++) 
-                {
-                var courseObj = {"name": coursesList[i].name, "distance": coursesList[i].distance}
-                endResults.push(secondUrlFetchCall(coursesList[i]));
-                console.log(endResults);
-                var distanceP = document.createElement('p');
-                distanceP.textContent = coursesList.distance;
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+                    'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
                 }
-           
-            function secondUrlFetchCall(input) 
-                {
-                console.log(input);
-                const crseOptions = 
-                    {
-                        method: 'GET',
-                        headers: {
-                                'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
-                                'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
-                                }
-                    };
-                
-                var nameQuery = input.name.split(' ').join("%20");
-                var zipCodeQuery = input.zip_code;
-                fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip='+zipCodeQuery+'&name='+nameQuery;
-                console.log(fetchURL);
-                fetch(fetchURL, crseOptions)
+            };
+
+            var nameQuery = input.name.split(' ').join("%20");
+            var zipCodeQuery = input.zip_code;
+            fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip=' + zipCodeQuery + '&name=' + nameQuery;
+            console.log(fetchURL);
+            fetch(fetchURL, crseOptions)
                 .then(response => response.json())
-	            .then(function(response) 
-                    {
+                .then(function (response) {
                     console.log(response);
                     return response;
                     // var courseAddr = response.course_details.result.formatted_address
@@ -89,11 +85,11 @@ fetch(passURL, listOptions)
                     // console.log(courseAddr, courseHTML)
                     // var rsltsObject = {"address": courseAddr,"website": courseHTML}
                     // console.log(rsltsObject);
-                    }
-                    )
-	            .catch(err => console.error(err));
-                };
-            }
+                }
+                )
+                .catch(err => console.error(err));
+        };
+    }
     )
 
 
@@ -111,93 +107,75 @@ var zipCode = "30076"
 
 console.log('Inside script.js');
 //c530c463eb236ecc331331c6c541cb4c315ecb3
-fetch('https://api.geocod.io/v1.7/geocode?q=' + zipCode + '&api_key=' + api_key + '')
-    .then(response => {
-        console.log('Response object looks like', response);
+function geoAPI() {
+    console.log("geoAPI Running")
+    fetch('https://api.geocod.io/v1.7/geocode?q=' + zipCode + '&api_key=' + api_key + '')
+        .then(response => {
+            console.log('Response object looks like', response);
 
-        var parsedData = response.json();
-        console.log('parsedData looks like', parsedData);
-        return parsedData;
-    })
-    .then(maybeData => {
-        console.log('maybeData', maybeData);
-        userLat = maybeData.results[0].location.lat;
-        userLong = maybeData.results[0].location.lng;
-        console.log(userLat, userLong);
- } )
-
+            var parsedData = response.json();
+            console.log('parsedData looks like', parsedData);
+            return parsedData;
+        })
+        .then(maybeData => {
+            console.log('maybeData', maybeData);
+            userLat = maybeData.results[0].location.lat;
+            userLong = maybeData.results[0].location.lng;
+            console.log(userLat, userLong);
+        })
+}
 var coursePar = ""
 var strokes = ""
 var course = ""
 var courseEl = $('#course')
 var parEl = $('#par')
-var strokesEl =$('#strokes')
+var strokesEl = $('#strokes')
 var scoreContainerEl = $('#scoreContainer')
 var submitButton = $('#submit')
 var mySavedScore = []
-function scorecard(){
-   //lets do the calculation for the score here
-    var score= (strokes - coursePar)
-    if (score < 0){
+function scorecard() {
+    //lets do the calculation for the score here
+    var score = parseInt(strokesEl.val()) - parseInt(parEl.val());
+    if (score < 0) {
         var trueScore = (score + " under par");
-        }
-        else{
-            var trueScore = (score + " over par");
-        }
+    }
+    else {
+        var trueScore = (score + " over par");
+    }
     myScore = {
         course: courseEl.val(),
         strokes: parseInt(strokesEl.val()),
         coursePar: parseInt(parEl.val()),
-        score: checkScore(),
+        score: trueScore
     }
     console.log(myScore)
     console.log(typeof myScore.strokes)
-    
-    function checkScore() {
-        var score = parseInt(strokesEl.val())-parseInt(parEl.val());
-        if (score < 0){
-            return score + " under par";
-        }
-        else {
-            return score + " over par";
-        }
-    }
-   
 
-if ((course!=='')
-    && (strokes !== '')
-    && (coursePar !== '')){
+    if ((myScore.course !== '') && (myScore.strokes !== '') && (myScore.coursePar !== '')) {
         console.log('was true')
-    mySavedScore.push(myScore)
+        mySavedScore.push(myScore)
 
-    storemyScore()
-    rendermyScore()
-}
+        storeScore()
+        renderScore()
+    }
 
 }
-function storeScore(){
-    localStorage.setItem("scoreCard",JSON.stringify(mySavedScore))
+function storeScore() {
+    localStorage.setItem("scoreCard", JSON.stringify(mySavedScore))
 }
-submitButton.click(scorecard)
 
-function renderScore(){
-    if (!localStorage.getItem("scoreCard")){
-        mySavedScore = ''
-    }else {mySavedScore = JSON.parse(localStorage.getItem("scoreCard"))}
-for (var i=0;i<mySavedScore.length;i++){
-    var scoreText = ("course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].trueScoreEl )
-    var scoreList = $("<li></li>")
-    scoreList.text(scoreText);
-    scoreList.addClass('w-100');
-    scoreContainerEl.append(scoreList)
+
+function renderScore() {
+    for (var i = 0; i < mySavedScore.length; i++) {
+        var scoreText = ("course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].trueScoreEl)
+        var scoreList = $("<li></li>")
+        scoreList.text(scoreText);
+        scoreList.addClass('w-100');
+        scoreContainerEl.append(scoreList)
+    }
 }
-}
-submitButton.click(scorecard)
 
 //Charlee note: rename all variables and formatting once the HTML is built
-searchBtn.click(saveSearch);
-searchContainerEl.on("click", "button", showPrevCity);
-var weatherContainer = $("#weatherContainer")
 
 function init() {
     //when the page loads we hide the weather display since they have yet to search for things
@@ -209,6 +187,15 @@ function init() {
     } else {
         savedSearched = JSON.parse(localStorage.getItem("prevSearches"));
     }
+    if (!localStorage.getItem("mySavedEvents")) {
+        savedEvents = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+    } else {
+        savedEvents = JSON.parse(localStorage.getItem("mySavedEvents"))
+    }
+    if (!localStorage.getItem("scoreCard")) {
+        mySavedScore = ''
+    } else { mySavedScore = JSON.parse(localStorage.getItem("scoreCard")) }
+    render()
     renderCities();
 }
 
@@ -219,12 +206,11 @@ async function saveSearch(event) {
         cityText: cityInputEl.val(),
         radiusText: radInputEl.val()
     }
-    console.log(currentSearch)
     if ((currentSearch.cityText !== '') && (currentSearch.radiusText !== '')) {
         savedSearched.push(currentSearch)
     }
     //now we want to save the data and also send the data to an array and display it
-    zipcode = currentSearch.cityText;
+    zipCode = currentSearch.cityText;
     //We want to clear these variables so that they are empty if we call a new city
     // nextForecast = [];
     // futureArray = [];
@@ -238,7 +224,6 @@ function storeCities() {
 function renderCities() {
     searchContainerEl.empty()
     // searchContainerEl.innerHTML = '';
-    console.log(savedSearched)
     for (var i = 0; i < savedSearched.length; i++) {
         //lets add the all of the previous cities as buttons
         var searchText = "zipcode: " + savedSearched[i].cityText + ' : ' + savedSearched[i].radiusText + " mile radius";
@@ -256,7 +241,7 @@ function renderCities() {
 function extractCity(event) {
     var cityInput = event.currentTarget.innerHTML;
     zipcode = cityInput;
-    return zipcode;
+    return zipCode;
 }
 var todayWeather;
 
@@ -279,11 +264,7 @@ var saveBtnEl = $("#scheduleContainer")
 //now we are looking for a single click on any button
 saveBtnEl.on("click", "button", saveEvent)
 //we create an empty array with the length of 9
-if (!localStorage.getItem("mySavedEvents")) {
-    var savedEvents = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-} else {
-    var savedEvents = JSON.parse(localStorage.getItem("mySavedEvents"))
-}
+
 function saveEvent(event) {
     event.preventDefault()
     //now we prevent default and the new variable newInput will reference the previousElementSibling of pressed button
@@ -394,9 +375,21 @@ function render() {
     }
 }
 //display everything by calling the init 
-render()
 init()
+submitButton.click(scorecard)
+searchBtn.click(searchResults);
+searchContainerEl.on("click", "button", showPrevCity);
+var weatherContainer = $("#weatherContainer")
+function searchResults(event) {
+    saveSearch(event)
+    geoAPI()
 
+}
+
+function prevSearchResults(event) {
+    extractCity(event)
+    geoAPI()
+}
 
 // display: function (data) {
 //     var { name } = data;
