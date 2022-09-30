@@ -55,4 +55,14 @@ p {
     font-size: 20px;
 }
 
+#scoreinput {
+    display: flex;
+    flex-direction: column;
+    padding-top: 300px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+    
+}
+
+
 @media screen and (max-width: 768px)
