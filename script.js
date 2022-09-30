@@ -45,56 +45,56 @@ const listOptions = {
         //Backup::: 'X-RapidAPI-Key': '117569feccmshe066252e72a76dep1718aejsn59decca9f439'
     }
 };
-function golfAPI(res) {
-    var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius=" + srchRadius + "&lat=" + userLat + "&lng=" + userLong
+// function golfAPI(res) {
+//     var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius=" + srchRadius + "&lat=" + userLat + "&lng=" + userLong
 
-    console.log("golfAPI running")
-    fetch(passURL, listOptions)
-        .then(response => response.json())
-        .then(function (response) {
-            var coursesList = response.courses;
-            // console.log("first fetch", coursesList)
-            var endResults = []; //This will contain the information of the second fetch call
-            for (var i = 0; i < coursesList.length; i++) {
-                var courseObj = { "name": coursesList[i].name, "distance": coursesList[i].distance }
-                endResults.push(secondUrlFetchCall(coursesList[i]));
-                // console.log(endResults);
-                var distanceP = document.createElement('p');
-                distanceP.textContent = coursesList.distance;
-            }
+//     console.log("golfAPI running")
+//     fetch(passURL, listOptions)
+//         .then(response => response.json())
+//         .then(function (response) {
+//             var coursesList = response.courses;
+//             // console.log("first fetch", coursesList)
+//             var endResults = []; //This will contain the information of the second fetch call
+//             for (var i = 0; i < coursesList.length; i++) {
+//                 var courseObj = { "name": coursesList[i].name, "distance": coursesList[i].distance }
+//                 endResults.push(secondUrlFetchCall(coursesList[i]));
+//                 // console.log(endResults);
+//                 var distanceP = document.createElement('p');
+//                 distanceP.textContent = coursesList.distance;
+//             }
 
-            function secondUrlFetchCall(input) {
-                console.log(input);
-                const crseOptions =
-                {
-                    method: 'GET',
-                    headers: {
-                        'X-RapidAPI-Key': '9575720cf8mshc57a34a19077e6fp19f2bdjsna4ea76d66dd9',
-                        'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
-                    }
-                };
+//             function secondUrlFetchCall(input) {
+//                 console.log(input);
+//                 const crseOptions =
+//                 {
+//                     method: 'GET',
+//                     headers: {
+//                         'X-RapidAPI-Key': '9575720cf8mshc57a34a19077e6fp19f2bdjsna4ea76d66dd9',
+//                         'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
+//                     }
+//                 };
 
-                var nameQuery = input.name.split(' ').join("%20");
-                var zipCodeQuery = input.zip_code;
-                fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip=' + zipCodeQuery + '&name=' + nameQuery;
-                console.log(fetchURL);
-                fetch(fetchURL, crseOptions)
-                    .then(response => response.json())
-                    .then(function (response) {
-                        console.log(response);
-                        return response;
-                        // var courseAddr = response.course_details.result.formatted_address
-                        // var courseHTML = response.course_details.result.website
-                        // console.log(courseAddr, courseHTML)
-                        // var rsltsObject = {"address": courseAddr,"website": courseHTML}
-                        // console.log(rsltsObject);
-                    }
-                    )
-                    .catch(err => console.error(err));
-            };
-        }
-        )
-}
+//                 var nameQuery = input.name.split(' ').join("%20");
+//                 var zipCodeQuery = input.zip_code;
+//                 fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip=' + zipCodeQuery + '&name=' + nameQuery;
+//                 console.log(fetchURL);
+//                 fetch(fetchURL, crseOptions)
+//                     .then(response => response.json())
+//                     .then(function (response) {
+//                         console.log(response);
+//                         return response;
+//                         // var courseAddr = response.course_details.result.formatted_address
+//                         // var courseHTML = response.course_details.result.website
+//                         // console.log(courseAddr, courseHTML)
+//                         // var rsltsObject = {"address": courseAddr,"website": courseHTML}
+//                         // console.log(rsltsObject);
+//                     }
+//                     )
+//                     .catch(err => console.error(err));
+//             };
+//         }
+//         )
+// }
 
 
 //     fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip='+zip+'&name='+name;
@@ -138,9 +138,10 @@ var parEl = $('#par')
 var strokesEl = $('#strokes')
 var scoreContainerEl = $('#scoreContainer')
 var submitButton = $('#submit')
-var mySavedScore = []
+var mySavedScore = [];
 function scorecard() {
     //lets do the calculation for the score here
+    console.log(mySavedScore)
     var score = parseInt(strokesEl.val()) - parseInt(parEl.val());
     if (score < 0) {
         var trueScore = (score + " under par");
@@ -159,12 +160,14 @@ function scorecard() {
 
     if ((myScore.course !== '') && (myScore.strokes !== '') && (myScore.coursePar !== '')) {
         console.log('was true')
+        console.log(mySavedScore)
+        console.log(typeof mySavedScore)
         mySavedScore.push(myScore)
 
         storeScore()
         renderScore()
-    }
 
+    }
 }
 function storeScore() {
     localStorage.setItem("scoreCard", JSON.stringify(mySavedScore))
@@ -172,16 +175,15 @@ function storeScore() {
 
 
 function renderScore() {
+    scoreContainerEl.empty()
     for (var i = 0; i < mySavedScore.length; i++) {
-        var scoreText = ("course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].trueScoreEl)
+        var scoreText = ("course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].score)
         var scoreList = $("<li></li>")
         scoreList.text(scoreText);
         scoreList.addClass('w-100');
         scoreContainerEl.append(scoreList)
     }
 }
-
-//Charlee note: rename all variables and formatting once the HTML is built
 
 function init() {
     //when the page loads we hide the weather display since they have yet to search for things
@@ -199,10 +201,12 @@ function init() {
         savedEvents = JSON.parse(localStorage.getItem("mySavedEvents"))
     }
     if (!localStorage.getItem("scoreCard")) {
-        mySavedScore = ''
+        mySavedScore = []
+        console.log(mySavedScore)
     } else { mySavedScore = JSON.parse(localStorage.getItem("scoreCard")) }
     render()
     renderCities();
+    renderScore()
 }
 
 async function saveSearch(event) {
