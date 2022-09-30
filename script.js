@@ -23,11 +23,21 @@ var searchContainerEl = $("#savedCities")
 var prevDistance;
 var savedSearched = []
 
+// for (i=0;i<tempArry.length;i++) {
+    //          coursesArry.push(tempArry[i])
+    //    console.log("fetch",coursesArry);
+    //}
+
+   //  return coursesArry;
+   // var distArray = []; //Array of Objects that only contain the name and the zipcode from the first call
+   // for(var i = 0; i < tempArry.length; i++) {
+   //     distArray.push({name: tempArry[i].name, zip_code: tempArry[i].zip_code});
 
 var srchRadius = 5;
-var geoLat = 33.749;
-var geoLng = -84.38798;
-var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius=" + srchRadius + "&lat=" + geoLat + "&lng=" + geoLng
+var userLat = 33.749;
+var userLong = -84.38798;
+var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius="+srchRadius+"&lat="+userLat+"&lng="+userLong
+
 
 const listOptions = {
     method: 'GET',
@@ -37,35 +47,55 @@ const listOptions = {
     }
 };
 
-var coursesArry = [];
-// fetch(passURL, listOptions)
-//     .then(response => response.json())
-//     .then(function (response) {
-//         console.log(response);
-//         tempArry = Array.from(response.courses);
-//         coursesArry = [];
-//         for (i = 0; i < tempArry.length; i++) {
-//             coursesArry[i].push(tempArry[i])
-//             console.log("fetch", coursesArry);
-//         }
-//         return coursesArry;
-//     })
-
-console.log("Return", coursesArry)
-
-const crseOptions = {
-    method: 'GET',
-    headers: {
-        'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
-        'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
-    }
-};
-
-
-
-
-
-
+fetch(passURL, listOptions)
+	.then(response => response.json())
+	.then(function(response)
+            {
+            var coursesList = response.courses;
+            console.log("first fetch", coursesList)
+            var endResults = []; //This will contain the information of the second fetch call
+            for(var i = 0; i < coursesList.length; i++) 
+                {
+                var courseObj = {"name": coursesList[i].name, "distance": coursesList[i].distance}
+                endResults.push(secondUrlFetchCall(coursesList[i]));
+                console.log(endResults);
+                var distanceP = document.createElement('p');
+                distanceP.textContent = coursesList.distance;
+                }
+           
+            function secondUrlFetchCall(input) 
+                {
+                console.log(input);
+                const crseOptions = 
+                    {
+                        method: 'GET',
+                        headers: {
+                                'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+                                'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
+                                }
+                    };
+                
+                var nameQuery = input.name.split(' ').join("%20");
+                var zipCodeQuery = input.zip_code;
+                fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip='+zipCodeQuery+'&name='+nameQuery;
+                console.log(fetchURL);
+                fetch(fetchURL, crseOptions)
+                .then(response => response.json())
+	            .then(function(response) 
+                    {
+                    console.log(response);
+                    return response;
+                    // var courseAddr = response.course_details.result.formatted_address
+                    // var courseHTML = response.course_details.result.website
+                    // console.log(courseAddr, courseHTML)
+                    // var rsltsObject = {"address": courseAddr,"website": courseHTML}
+                    // console.log(rsltsObject);
+                    }
+                    )
+	            .catch(err => console.error(err));
+                };
+            }
+    )
 
 
 //     fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip='+zip+'&name='+name;
