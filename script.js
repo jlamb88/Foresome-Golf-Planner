@@ -126,8 +126,6 @@ fetch('https://api.geocod.io/v1.7/geocode?q=' + zipCode + '&api_key=' + api_key 
         console.log(userLat, userLong);
  } )
 
-
-
 var coursePar = ""
 var strokes = ""
 var course = ""
