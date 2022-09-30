@@ -1,8 +1,25 @@
+
+var weatherTracker = {
+    weatherapi: "ac96e744e22de6b8cf05d8399f7bfdf3",
+    fetchtracker: function () {
+        fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "+&units=imerial&appid=" + weatherapi)
+            //city needs to be linked to the golf API
+            .then((response) => response.json())
+            .then((data) => this.forecastDisplay(data));
+        // display: function (data) {
+        //     var { name } = data;
+        //     var { speed } = data.wind;
+        //     var { description, icon } = data.weather[0];
+        //     var { humidity, temp } = data.main;
+        //     console.log(name, temp, description, icon, humidity, speed);
+
+        // }
+    },
+}
 var searchBtn = $('#searchBtn');
 var cityInputEl = $('#cityInput');
 var radInputEl = $('#distanceInput');
 var searchContainerEl = $("#savedCities")
-var prevCities;
 var prevDistance;
 var savedSearched = []
 
@@ -21,12 +38,13 @@ var userLat = 33.749;
 var userLong = -84.38798;
 var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius="+srchRadius+"&lat="+userLat+"&lng="+userLong
 
+
 const listOptions = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
-		'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
-	}
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+        'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
+    }
 };
 
 fetch(passURL, listOptions)
@@ -80,11 +98,11 @@ fetch(passURL, listOptions)
     )
 
 
-
-
-
-    
-    
+//     fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip='+zip+'&name='+name;
+//     fetch(fetchURL, crseOptions)
+//         .then(response => response.json())
+//         .then(response => console.log(response))
+//         .catch(err => console.error(err));
 
 var userLat;
 var userLong;
@@ -116,10 +134,12 @@ fetch('https://api.geocod.io/v1.7/geocode?q=' + zipCode + '&api_key=' + api_key 
 //Charlee note: rename all variables and formatting once the HTML is built
 searchBtn.click(saveSearch);
 searchContainerEl.on("click", "button", showPrevCity);
+var weatherContainer = $("#weatherContainer")
+
 function init() {
     //when the page loads we hide the weather display since they have yet to search for things
     //we also will call down items from local storage, and then we will render the cities
-    weatherContainer.style.visibility = "hidden";
+    // weatherContainer.style.visibility = "hidden";
 
     if (!localStorage.getItem("prevSearches")) {
         savedSearched = [];
@@ -139,29 +159,28 @@ async function saveSearch(event) {
     console.log(currentSearch)
     if ((currentSearch.cityText !== '') && (currentSearch.radiusText !== '')) {
         savedSearched.push(currentSearch)
-    } else (savedSearched = [])
+    }
     //now we want to save the data and also send the data to an array and display it
     zipcode = currentSearch.cityText;
     //We want to clear these variables so that they are empty if we call a new city
     // nextForecast = [];
     // futureArray = [];
-    storeCities();
+    storeCities()
     renderCities();
     //add lines functions that call API and display the information
 }
-
 function storeCities() {
-    //lets store them locally so when we reload the page they'll still be here
     localStorage.setItem("prevSearches", JSON.stringify(savedSearched));
 }
 function renderCities() {
-    searchContainerEl.innerHTML = "";
-
+    searchContainerEl.empty()
+    // searchContainerEl.innerHTML = '';
+    console.log(savedSearched)
     for (var i = 0; i < savedSearched.length; i++) {
         //lets add the all of the previous cities as buttons
         var searchText = "zipcode: " + savedSearched[i].cityText + ' : ' + savedSearched[i].radiusText + " mile radius";
-        var prevBtn = $("<button></button>");
 
+        var prevBtn = $("<button></button>");
         var btnContainer = $("<li></li>");
 
         prevBtn.text(searchText);
@@ -169,6 +188,7 @@ function renderCities() {
         btnContainer.append(prevBtn);
         searchContainerEl.append(btnContainer);
     }
+
 }
 function extractCity(event) {
     var cityInput = event.currentTarget.innerHTML;
@@ -188,9 +208,10 @@ function showPrevCity(event) {
     // runFuture()
 }
 var today = moment();
-$("#todayDate").text(today.format("dddd, MMMM Do YYYY"));
-$("#tomorrowDate").text(moment().add((1), 'days').format('dddd, MMMM Do YYYY'))
-$('#afterTomorrowDate').text(moment().add((2), 'days').format('dddd, MMMM Do YYYY'))
+$(".todayDate").text(today.format("dddd, MMMM Do YYYY"));
+$(".tomorrowDate").text(moment().add((1), 'days').format('dddd, MMMM Do YYYY'))
+$('.afterTomorrowDate').text(moment().add((2), 'days').format('dddd, MMMM Do YYYY'))
+
 var saveBtnEl = $("#scheduleContainer")
 //now we are looking for a single click on any button
 saveBtnEl.on("click", "button", saveEvent)
@@ -315,4 +336,19 @@ function render() {
 }
 //display everything by calling the init 
 render()
+init()
+
+
+// display: function (data) {
+//     var { name } = data;
+//     var { speed } = data.wind;
+//     var { description, icon } = data.weather[0];
+//     var { humidity, temp } = data.main;
+//     console.log(name, temp, description, icon, humidity, speed);
+
+// }
+
+
+
+console.log("hello")
 
