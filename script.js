@@ -38,11 +38,11 @@ fetch(passURL, listOptions)
             var endResults = []; //This will contain the information of the second fetch call
             for(var i = 0; i < coursesList.length; i++) 
                 {
-                courseObj = {course: name}
-                endResults.push({"course": name})
+                var courseObj = {"name": coursesList[i].name, "distance": coursesList[i].distance}
                 endResults.push(secondUrlFetchCall(coursesList[i]));
+                console.log(endResults);
                 var distanceP = document.createElement('p');
-                distanceP.textContent = coursesList.courses.distance;
+                distanceP.textContent = coursesList.distance;
                 }
            
             function secondUrlFetchCall(input) 
@@ -66,12 +66,14 @@ fetch(passURL, listOptions)
 	            .then(function(response) 
                     {
                     console.log(response);
-                    var courseAddr = response.course_details.result.formatted_address
-                    var courseHTML = response.course_details.result.website
-                    
-                    endResults            
-
-                })
+                    return response;
+                    // var courseAddr = response.course_details.result.formatted_address
+                    // var courseHTML = response.course_details.result.website
+                    // console.log(courseAddr, courseHTML)
+                    // var rsltsObject = {"address": courseAddr,"website": courseHTML}
+                    // console.log(rsltsObject);
+                    }
+                    )
 	            .catch(err => console.error(err));
                 };
             }
