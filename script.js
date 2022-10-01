@@ -76,7 +76,6 @@ fetch(passURL, listOptions)
                 console.log(endResults);
                 }
             
-           
             function secondUrlFetchCall(input) 
                 {
                 const crseOptions = 
