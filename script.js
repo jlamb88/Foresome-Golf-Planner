@@ -102,6 +102,7 @@ fetch(passURL, listOptions)
                     var courseImg = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference='+courseImgRef+'&key='+placesImgKey
                     var rsltsObject = {"address": courseAddress,"website": courseURL,"image": courseImg}
                     console.log(rsltsObject);
+
                     return rsltsObject;
                     }
                     )
