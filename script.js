@@ -24,8 +24,8 @@ var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius="+srchRa
 const listOptions = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
-		'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
+		'X-RapidAPI-Key': '9575720cf8mshc57a34a19077e6fp19f2bdjsna4ea76d66dd9',
+        'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
 	}
 };
 
@@ -35,24 +35,37 @@ fetch(passURL, listOptions)
             {
             var coursesList = response.courses;
             console.log("first fetch", coursesList)
-            var endResults = []; //This will contain the information of the second fetch call
+            courseResultsCount = coursesList.length + ' courses meet your search criteria';
+            $('#courses-bar').append('<h6>'+courseResultsCount+'</h6>');
+            var endResults = []; 
             for(var i = 0; i < coursesList.length; i++) 
                 {
+                var courseImg ="";
+                var courseAddress="";
+                var courseURL ="";
                 var courseObj = {"name": coursesList[i].name, "distance": coursesList[i].distance}
+                var courseDistance = coursesList[i].distance;
+                var courseName = coursesList[i].name;
+                var courseResultsCard =
+                '<div class="card" id="course-card" style="width: 10rem;margin-right: 0 1 1 0rem"> <img src="'+courseImg+'" class="card-img-top" alt="picture of golf course from search results"> <div class="card-body"> <h6 class="card-title">'+courseName+'</h6> <p class="card-text">'+courseAddress+'<br>'+courseDistance+'</br></p> <a href="'+courseURL+'" class="btn btn-primary">Website</a> </div> </div>';
+                
+                console.log(courseResultsCard);
+
+                $('#courses-results').append(courseResultsCard);
+                endResults.push(courseObj);
+                console.log(endResults);
                 endResults.push(secondUrlFetchCall(coursesList[i]));
                 console.log(endResults);
-                var distanceP = document.createElement('p');
-                distanceP.textContent = coursesList.distance;
                 }
+            
            
             function secondUrlFetchCall(input) 
                 {
-                console.log(input);
                 const crseOptions = 
                     {
                         method: 'GET',
                         headers: {
-                                'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+                                'X-RapidAPI-Key': '9575720cf8mshc57a34a19077e6fp19f2bdjsna4ea76d66dd9',
                                 'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
                                 }
                     };
@@ -60,18 +73,19 @@ fetch(passURL, listOptions)
                 var nameQuery = input.name.split(' ').join("%20");
                 var zipCodeQuery = input.zip_code;
                 fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip='+zipCodeQuery+'&name='+nameQuery;
-                console.log(fetchURL);
-                fetch(fetchURL, crseOptions)
+                 fetch(fetchURL, crseOptions)
                 .then(response => response.json())
 	            .then(function(response) 
                     {
                     console.log(response);
-                    return response;
-                    // var courseAddr = response.course_details.result.formatted_address
-                    // var courseHTML = response.course_details.result.website
-                    // console.log(courseAddr, courseHTML)
-                    // var rsltsObject = {"address": courseAddr,"website": courseHTML}
-                    // console.log(rsltsObject);
+                    var courseAddress = response.course_details.result.formatted_address
+                    var courseURL = response.course_details.result.website
+                    var placesImgKey = 'AIzaSyDwPSRdwH9WbRXsdvun20zY-AuIQhzuqeU' 
+                    var courseImgRef = response.course_details.result.photos[0].photo_reference
+                    var courseImg = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference='+courseImgRef+'&key='+placesImgKey
+                    var rsltsObject = {"address": courseAddress,"website": courseURL,"image": courseImg}
+                    console.log(rsltsObject);
+                    return rsltsObject;
                     }
                     )
 	            .catch(err => console.error(err));
@@ -80,6 +94,13 @@ fetch(passURL, listOptions)
     )
 
 
+    courseResultsCount = noCourseResults + ' courses met your search criteria';
+    $('#courses-bar').append('<h6>'+courseResultsCount+'</h6>');
+    
+    courseResultsCard =
+    '<div class="card" style="width: 10rem;margin-right: 1rem"> <img src="'+courseImg+'" class="card-img-top" alt="picture of golf course from search results"> <div class="card-body"> <h6 class="card-title">'+courseName+'</h6> <p class="card-text">'+courseAddress+'<br>'+courseDistance+' miles</br></p> <a href="'+courseURL+'" class="btn btn-primary">Website</a> </div> </div>'
+    
+    $('#courses-results').append(courseResultsCard)
 
 
 
