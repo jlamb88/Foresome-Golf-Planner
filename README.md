@@ -1,5 +1,20 @@
 # Best-Project_ever
 
+## Description
+
+## Installation
+N/A
+## Usage
+
+![mock-up](./assets/images/mock-up.png)
+## Credits
+
+## License
+N/A
+
+## Link to Application
+[Link to Application](https://hdyoung21.github.io/Best-Project-ever/)
+
 // Java Script has been really fun because of the lack of sleep it has caused.  I feel borderline delusional half the time and too stressed to relax.
 
 scope
