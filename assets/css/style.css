@@ -67,6 +67,12 @@ p {
 
 #scoreContainer {
     padding-left: 10px;
+    list-style: none;
 }
+
+#savedCities {
+    list-style: none;
+}
+
 
 /* @media screen and (max-width: 768px) */
