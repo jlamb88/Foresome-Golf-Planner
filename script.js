@@ -42,7 +42,7 @@ var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius="+srchRa
 const listOptions = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+        'X-RapidAPI-Key': '9575720cf8mshc57a34a19077e6fp19f2bdjsna4ea76d66dd9',
         'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
     }
 };
