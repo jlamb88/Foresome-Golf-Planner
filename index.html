@@ -2,7 +2,8 @@
 <html lang="en-us">
 
 <head>
-   
+
+
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="Description" content="Enter your description here" />
@@ -10,6 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
   <title>Duffers Unite - Your Easy Golf Planner</title>
+
 </head>
 
 <body>
@@ -38,8 +40,8 @@
       </div>
     </div>
   </header>
-
-  <section class="">
+  
+  <section class="container-fluid">
     <section class="row">
       <section class="col-3" id="sidebar">
         <section class="inputContainer">
@@ -49,16 +51,16 @@
           <p>Previous Searches</p>
           <ul class="my-2 w-100" id="savedCities"></ul>
         </section>
-        <input id="course" placeholder="Course Initials">
-    <br>
-    <input id="par" placeholder="Enter Course Par">
-    <br>
-    <input id="strokes" placeholder="Stroke Count">
-    <button id="submit">Submit</button>
-      <section class="row" id="scoreCard">
-                    <ul id="" scoreContainer"></ul>
-                </section>
-        <!-- <section class="row" id="search-bar">Search</section> -->
+        <section class="column" id="scoreinput">
+          <input id="course" placeholder="Course Initials">
+          <input id="par" placeholder="Enter Course Par">
+          <input id="strokes" placeholder="Enter Stroke Count">
+          <button id="submit">Submit</button>
+        </section>
+        <section class="row" id="scoreCard">
+          <ul class="mx-2" id="scoreContainer"></ul>
+        </section>
+
 
       </section>
       <section class="col-9" id="content">
@@ -94,10 +96,12 @@
           </div>
         </section>
 
+
         <section class="row" id="course-search">Courses</section>
         <!-- before addition-->
         <h2 class="text-center">Your Schedule</h2>
         <section class="row" id="scheduleContainer">
+
 
           <section class="col-4" id="todayCalContainter">
             <p class="todayDate">today</p>
@@ -112,12 +116,12 @@
               <button class="saveBtn" id="save10">Save</button>
             </section>
             <section class="row" id="11">
-              <p class="col-2 hour" class="hour">11am</p>
+              <p class="col-2 hour" class="hour">11AM</p>
               <input data-num="3" class="col-8 time-block" id="11amEvent" />
               <button class="saveBtn" id="save11">Save</button>
             </section>
             <section class="row" id="12">
-              <p class="col-2 hour">12pm</p>
+              <p class="col-2 hour">12PM</p>
               <input data-num="4" class="col-8 time-block" id="12pmEvent" />
               <button class="saveBtn" id="save12">Save</button>
             </section>
@@ -160,12 +164,12 @@
               <button class="saveBtn" id="save10">Save</button>
             </section>
             <section class="row" id="11">
-              <p class="col-2 hour" class="hour">11am</p>
+              <p class="col-2 hour" class="hour">11AM</p>
               <input data-num="12" class="col-8 time-block" id="11amEvent" />
               <button class="saveBtn" id="save11">Save</button>
             </section>
             <section class="row" id="12">
-              <p class="col-2 hour">12pm</p>
+              <p class="col-2 hour">12PM</p>
               <input data-num="13" class="col-8 time-block" id="12pmEvent" />
               <button class="saveBtn" id="save12">Save</button>
             </section>
@@ -196,6 +200,7 @@
             </section>
           </section>
 
+
           <section class="col-4" id="afterTomCalContainter">
             <p class="afterTomorrowDate">tomorrow</p>
             <section class="row" id="9">
@@ -209,12 +214,12 @@
               <button class="saveBtn" id="save10">Save</button>
             </section>
             <section class="row" id="11">
-              <p class="col-2 hour" class="hour">11am</p>
+              <p class="col-2 hour" class="hour">11AM</p>
               <input data-num="21" class="col-8 time-block" id="11amEvent" />
               <button class="saveBtn" id="save11">Save</button>
             </section>
             <section class="row" id="12">
-              <p class="col-2 hour">12pm</p>
+              <p class="col-2 hour">12PM</p>
               <input data-num="22" class="col-8 time-block" id="12pmEvent" />
               <button class="saveBtn" id="save12">Save</button>
             </section>
@@ -248,6 +253,7 @@
         </section>
 
 
+
       </section>
     </section>
 
@@ -267,4 +273,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
 <script src="script.js"></script>
+
 </html>
