@@ -30,17 +30,16 @@ const listOptions = {
 function golfAPI(res) {
     var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius=" + srchRadius + "&lat=" + userLat + "&lng=" + userLong
 
-// first API fetch to retrieve general course results in a geographic area from search
-fetch(passURL, listOptions)
-	.then(response => response.json())
-	.then(async function(response)
-            {
+    // first API fetch to retrieve general course results in a geographic area from search
+    fetch(passURL, listOptions)
+        .then(response => response.json())
+        .then(async function (response) {
+
             var coursesList = response.courses;
-            courseResultsCount = '<br>'+coursesList.length + ' courses meet your search criteria<br>';
-            $('#courses-bar').append('<h6>'+courseResultsCount+'</h6></br>');
-//iterates second fetch call for each course fetched by first results
-            for(var i = 0; i < coursesList.length; i++) 
-                {
+            courseResultsCount = '<br>' + coursesList.length + ' courses meet your search criteria<br>';
+            $('#courses-bar').append('<h6>' + courseResultsCount + '</h6></br>');
+            //iterates second fetch call for each course fetched by first results
+            for (var i = 0; i < coursesList.length; i++) {
                 var courseObj = { name: coursesList[i].name, distance: coursesList[i].distance, address: "", image: "", URL: "" }
                 var courseDistance = coursesList[i].distance;
                 var courseName = coursesList[i].name;
@@ -61,22 +60,21 @@ fetch(passURL, listOptions)
                 var zipCodeQuery = input.zip_code;
                 fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip=' + zipCodeQuery + '&name=' + nameQuery;
                 fetch(fetchURL, crseOptions)
-                .then(response => response.json())
-	            .then(function(response) 
-                    {
-                    var courseAddress = response.course_details.result.formatted_address
-                    var courseURL = response.course_details.result.website
-                    var placesImgKey = 'AIzaSyDwPSRdwH9WbRXsdvun20zY-AuIQhzuqeU' //Google Places API key
-                    var courseImgRef = response.course_details.result.photos[0].photo_reference
-                    var courseImg = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=2000&photo_reference='+courseImgRef+'&key='+placesImgKey
-                    var courseName = input.name
-                    var courseDistance = input.distance
-                    var courseResultsCard =
-                    '<div class="card" id="course-card" style="width: 12.1rem;height: 28rem;margin: 0 0.75rem 0.75rem 0"> <img src="'+courseImg+'" class="card-img-top" id="card-image" alt="picture of golf course from search results"> <div class="card-body"> <h6 class="card-title">'+courseName+'</h6></br> <p class="card-text" id="card-address">'+courseAddress+'<br>'+courseDistance+' mi.</br></p> <a href="'+courseURL+'" class="btn btn-primary" id="card-URL">Website</a> </div> </div>';
-                    
-// Write search results card to page
-                $('#courses-results').append(courseResultsCard);
-                    return;
+                    .then(response => response.json())
+                    .then(function (response) {
+                        var courseAddress = response.course_details.result.formatted_address
+                        var courseURL = response.course_details.result.website
+                        var placesImgKey = 'AIzaSyDwPSRdwH9WbRXsdvun20zY-AuIQhzuqeU' //Google Places API key
+                        var courseImgRef = response.course_details.result.photos[0].photo_reference
+                        var courseImg = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=2000&photo_reference=' + courseImgRef + '&key=' + placesImgKey
+                        var courseName = input.name
+                        var courseDistance = input.distance
+                        var courseResultsCard =
+                            '<div class="card" id="course-card" style="width: 12.1rem;height: 28rem;margin: 0 0.75rem 0.75rem 0"> <img src="' + courseImg + '" class="card-img-top" id="card-image" alt="picture of golf course from search results"> <div class="card-body"> <h6 class="card-title">' + courseName + '</h6></br> <p class="card-text" id="card-address">' + courseAddress + '<br>' + courseDistance + ' mi.</br></p> <a href="' + courseURL + '" class="btn btn-primary" id="card-URL">Website</a> </div> </div>';
+
+                        // Write search results card to page
+                        $('#courses-results').append(courseResultsCard);
+                        return;
 
                     }
                     )
@@ -91,7 +89,6 @@ var userLong;
 var userProx;
 var api_key = "c530c463eb236ecc331331c6c541cb4c315ecb3"
 
-console.log('Inside script.js');
 //c530c463eb236ecc331331c6c541cb4c315ecb3
 
 async function geoAPI() {
@@ -195,7 +192,6 @@ function renderScore() {
 function init() {
     //when the page loads we hide the weather display since they have yet to search for things
     //we also will call down items from local storage, and then we will render the cities
-    // weatherContainer.style.visibility = "hidden";
     weatherContainer.hide()
     if (!localStorage.getItem("prevSearches")) {
         savedSearched = [];
@@ -240,10 +236,9 @@ function storeCities() {
 }
 function renderCities() {
     searchContainerEl.empty()
-    // searchContainerEl.innerHTML = '';
     for (var i = 0; i < savedSearched.length; i++) {
         //lets add the all of the previous cities as buttons
-        var searchText = "zipcode: " + savedSearched[i].cityText + ' : ' + savedSearched[i].radiusText + " mile radius";
+        var searchText = "Location: " + savedSearched[i].cityText + ' : ' + savedSearched[i].radiusText + " mile radius";
 
         var prevBtn = $("<button></button>");
         var btnContainer = $("<li></li>");
@@ -258,9 +253,12 @@ function renderCities() {
 function extractCity(event) {
     //how can I get both the zipcode and radius out of this?
     var cityInput = event.currentTarget.innerHTML;
-    zipcode = cityInput;
-
-    return zipCode;
+    var cityInputParse = cityInput.split(' ')
+    zipCode = cityInputParse[1];
+    srchRadius = cityInputParse[3]
+    console.log(zipCode)
+    console.log(srchRadius)
+    return zipCode, srchRadius;
 }
 var todayWeather;
 var today = moment();
@@ -385,13 +383,15 @@ function render() {
 //display everything by calling the init 
 init()
 searchBtn.click(searchResults);
+var prevBtnEl = $("#savedCities")
+//now we are looking for a single click on any button
+prevBtnEl.on("click", "button", prevSearchResults)
 // searchContainerEl.on("click", "button", prevSearchResults);
 function searchResults(event) {
+
     saveSearch(event)
     geoAPI().then(function (res) {
         golfAPI(res);
-        console.log(userLat)
-        console.log(userLong)
     })
     weatherContainer.show()
 }
@@ -402,5 +402,6 @@ function prevSearchResults(event) {
         golfAPI(res);
         console.log(userLat)
         console.log(userLong)
+        weatherContainer.show()
     })
 }
