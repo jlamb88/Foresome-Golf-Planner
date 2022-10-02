@@ -42,113 +42,66 @@ var savedSearched = [];
 const listOptions = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': '9575720cf8mshc57a34a19077e6fp19f2bdjsna4ea76d66dd9',
+        'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
         'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
-        //Backup::: 'X-RapidAPI-Key': '117569feccmshe066252e72a76dep1718aejsn59decca9f439'
     }
 };
 function golfAPI(res) {
     var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius=" + srchRadius + "&lat=" + userLat + "&lng=" + userLong
 
-fetch(passURL, listOptions)
-    .then(response => response.json())
-    .then(function (response) {
-        var coursesList = response.courses;
-        console.log("first fetch", coursesList)
-        var endResults = []; //This will contain the information of the second fetch call
-        for (var i = 0; i < coursesList.length; i++) {
-            var courseObj = { "name": coursesList[i].name, "distance": coursesList[i].distance }
-            endResults.push(secondUrlFetchCall(coursesList[i]));
-            console.log(endResults);
-            var distanceP = document.createElement('p');
-            distanceP.textContent = coursesList.distance;
-        }
-
-        function secondUrlFetchCall(input) {
-            console.log(input);
-            const crseOptions =
-            {
-                method: 'GET',
-                headers: {
-                    'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
-                    'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
-                }
-            };
-
-            var nameQuery = input.name.split(' ').join("%20");
-            var zipCodeQuery = input.zip_code;
-            fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip=' + zipCodeQuery + '&name=' + nameQuery;
-            console.log(fetchURL);
-            fetch(fetchURL, crseOptions)
-                .then(response => response.json())
-                .then(function (response) {
-                    console.log(response);
-                    return response;
-                    // var courseAddr = response.course_details.result.formatted_address
-                    // var courseHTML = response.course_details.result.website
-                    // console.log(courseAddr, courseHTML)
-                    // var rsltsObject = {"address": courseAddr,"website": courseHTML}
-                    // console.log(rsltsObject);
-                }
-                )
-                .catch(err => console.error(err));
-        };
-    }
-    )
     console.log("golfAPI running")
     fetch(passURL, listOptions)
         .then(response => response.json())
         .then(function (response) {
             var coursesList = response.courses;
-            // console.log("first fetch", coursesList)
-            var endResults = []; //This will contain the information of the second fetch call
-            for (var i = 0; i < coursesList.length; i++) {
-                var courseObj = { "name": coursesList[i].name, "distance": coursesList[i].distance }
-                endResults.push(secondUrlFetchCall(coursesList[i]));
-                // console.log(endResults);
-                var distanceP = document.createElement('p');
-                distanceP.textContent = coursesList.distance;
-            }
-
-            function secondUrlFetchCall(input) {
-                console.log(input);
-                const crseOptions =
+            courseResultsCount = coursesList.length + ' courses meet your search criteria';
+            $('#courses-bar').append('<h6>'+courseResultsCount+'</h6></br>');
+            var endResults = []; 
+            for(var i = 0; i < coursesList.length; i++) 
                 {
-                    method: 'GET',
-                    headers: {
-                        'X-RapidAPI-Key': '9575720cf8mshc57a34a19077e6fp19f2bdjsna4ea76d66dd9',
-                        'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
-                    }
-                };
-
+                var courseObj = {name: coursesList[i].name, distance: coursesList[i].distance, address: "",image: "",URL: ""}
+                var courseDistance = coursesList[i].distance;
+                var courseName = coursesList[i].name;
+                await secondUrlFetchCall(coursesList[i]);
+                }
+            
+            function secondUrlFetchCall(input) 
+                {
+                const crseOptions = 
+                    {
+                        method: 'GET',
+                        headers: {
+                                'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+                                'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
+                                }
+                    };
+                
                 var nameQuery = input.name.split(' ').join("%20");
                 var zipCodeQuery = input.zip_code;
-                fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip=' + zipCodeQuery + '&name=' + nameQuery;
-                console.log(fetchURL);
+                fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip='+zipCodeQuery+'&name='+nameQuery;
                 fetch(fetchURL, crseOptions)
-                    .then(response => response.json())
-                    .then(function (response) {
-                        console.log(response);
-                        return response;
-                        // var courseAddr = response.course_details.result.formatted_address
-                        // var courseHTML = response.course_details.result.website
-                        // console.log(courseAddr, courseHTML)
-                        // var rsltsObject = {"address": courseAddr,"website": courseHTML}
-                        // console.log(rsltsObject);
+                .then(response => response.json())
+	            .then(function(response) 
+                    {
+                    var courseAddress = response.course_details.result.formatted_address
+                    var courseURL = response.course_details.result.website
+                    var placesImgKey = 'AIzaSyDwPSRdwH9WbRXsdvun20zY-AuIQhzuqeU'
+                    var courseImgRef = response.course_details.result.photos[0].photo_reference
+                    var courseImg = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&maxheight=75&photo_reference='+courseImgRef+'&key='+placesImgKey
+                    var courseName = input.name
+                    var courseDistance = input.distance
+                    var courseResultsCard =
+                    '<div class="card" id="course-card" style="width: 11rem;height: 25rem;margin: 0 1rem 1rem 0"> <img src="'+courseImg+'" class="card-img-top" id="card-image" alt="picture of golf course from search results"> <div class="card-body"> <h6 class="card-title">'+courseName+'</h6> <p class="card-text" id="card-address">'+courseAddress+'<br>'+courseDistance+' mi.</br></p> <a href="'+courseURL+'" class="btn btn-primary" id="card-URL">Website</a> </div> </div>';
+                
+                $('#courses-results').append(courseResultsCard);
+                    return;
                     }
                     )
-                    .catch(err => console.error(err));
-            };
-        }
-        )
-}
+	            .catch(err => console.error(err));
+                };
+            }
+    )
 
-
-//     fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip='+zip+'&name='+name;
-//     fetch(fetchURL, crseOptions)
-//         .then(response => response.json())
-//         .then(response => console.log(response))
-//         .catch(err => console.error(err));
 
 var userLat;
 var userLong;
@@ -484,12 +437,3 @@ function prevSearchResults(event) {
         console.log(userLong)
     })
 }
-
-// display: function (data) {
-//     var { name } = data;
-//     var { speed } = data.wind;
-//     var { description, icon } = data.weather[0];
-//     var { humidity, temp } = data.main;
-//     console.log(name, temp, description, icon, humidity, speed);
-
-// }
