@@ -1,19 +1,13 @@
+var weatherContainer = $("#weatherContainer")
+
 var weatherTracker = {
     weatherapi: "ac96e744e22de6b8cf05d8399f7bfdf3",
     zipcode: "",
     fetchtracker: function () {
-        fetch("https://api.openweathermap.org/data/2.5/forecast?zip=" + zipcode +",us&units=imerial&appid=" + weatherapi)
+        fetch("https://api.openweathermap.org/data/2.5/forecast?zip=" + zipcode + ",us&units=imerial&appid=" + weatherapi)
             //city needs to be linked to the golf API
             .then((response) => response.json())
             .then((data) => this.forecastDisplay(data));
-        // display: function (data) {
-        //     var { name } = data;
-        //     var { speed } = data.wind;
-        //     var { description, icon } = data.weather[0];
-        //     var { humidity, temp } = data.main;
-        //     console.log(name, temp, description, icon, humidity, speed);
-
-        // }
     },
 }
 var searchBtn = $('#searchBtn');
@@ -23,20 +17,7 @@ var searchContainerEl = $("#savedCities")
 var prevDistance;
 var savedSearched = [];
 
-// for (i=0;i<tempArry.length;i++) {
-//          coursesArry.push(tempArry[i])
-//    console.log("fetch",coursesArry);
-//}
 
-//  return coursesArry;
-// var distArray = []; //Array of Objects that only contain the name and the zipcode from the first call
-// for(var i = 0; i < tempArry.length; i++) {
-//     distArray.push({name: tempArry[i].name, zip_code: tempArry[i].zip_code});
-
-
-// var srchRadius = 5;
-// var userLat = 33.749;
-// var userLong = -84.38798;
 
 
 const listOptions = {
@@ -60,25 +41,25 @@ fetch(passURL, listOptions)
 //iterates second fetch call for each course fetched by first results
             for(var i = 0; i < coursesList.length; i++) 
                 {
+                var courseObj = { name: coursesList[i].name, distance: coursesList[i].distance, address: "", image: "", URL: "" }
                 var courseDistance = coursesList[i].distance;
                 var courseName = coursesList[i].name;
                 await secondUrlFetchCall(coursesList[i]);
-                }
-            
-            function secondUrlFetchCall(input) 
+            }
+
+            function secondUrlFetchCall(input) {
+                const crseOptions =
                 {
-                const crseOptions = 
-                    {
-                        method: 'GET',
-                        headers: {
-                                'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
-                                'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
-                                }
-                    };
-                
+                    method: 'GET',
+                    headers: {
+                        'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+                        'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
+                    }
+                };
+
                 var nameQuery = input.name.split(' ').join("%20");
                 var zipCodeQuery = input.zip_code;
-                fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip='+zipCodeQuery+'&name='+nameQuery;
+                fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip=' + zipCodeQuery + '&name=' + nameQuery;
                 fetch(fetchURL, crseOptions)
                 .then(response => response.json())
 	            .then(function(response) 
@@ -96,19 +77,19 @@ fetch(passURL, listOptions)
 // Write search results card to page
                 $('#courses-results').append(courseResultsCard);
                     return;
+
                     }
                     )
-	            .catch(err => console.error(err));
-                };
-            }
-    )
-
+                    .catch(err => console.error(err));
+            };
+        }
+        )
+}
 
 var userLat;
 var userLong;
 var userProx;
 var api_key = "c530c463eb236ecc331331c6c541cb4c315ecb3"
-// var zipCode = "30076"
 
 console.log('Inside script.js');
 //c530c463eb236ecc331331c6c541cb4c315ecb3
@@ -118,7 +99,6 @@ async function geoAPI() {
     let geo = fetch('https://api.geocod.io/v1.7/geocode?q=' + zipCode + '&api_key=' + api_key + '')
         .then(response => {
             // console.log('Response object looks like', response);
-
             var parsedData = response.json();
             // console.log('parsedData looks like', parsedData);
             return parsedData;
@@ -184,28 +164,18 @@ function storeScores(scoresArray) {
     localStorage.setItem("scoreCard", JSON.stringify(scoresArray))
 }
 
-function getScores () {
-    var existingScores = JSON.parse(localStorage.getItem("scoreCard"));
-    if(!existingScores) {
-        return;
-    } else {
-        mySavedScore = mySavedScore.concat(existingScores);
-        // mySavedScore += existingScores; // mySavedScore = mySavedScore + existingScores
-    }
-}
-
 function renderScore() {
     scoreContainerEl.empty()
-    
-        // iterate through your saved score array
-        for (var i = 0; i < mySavedScore.length; i++) {
-            var scoreText = ("Course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].score)
-            var scoreList = $("<li></li>")
-            scoreList.text(scoreText);
-            scoreList.addClass('w-100');
-            scoreContainerEl.append(scoreList);
-        }
+
+    // iterate through your saved score array
+    for (var i = 0; i < mySavedScore.length; i++) {
+        var scoreText = ("Course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].score)
+        var scoreList = $("<li></li>")
+        scoreList.text(scoreText);
+        scoreList.addClass('w-100');
+        scoreContainerEl.append(scoreList);
     }
+}
 
 
 submitScoreButton.on("click", createScoreCard);
@@ -226,7 +196,7 @@ function init() {
     //when the page loads we hide the weather display since they have yet to search for things
     //we also will call down items from local storage, and then we will render the cities
     // weatherContainer.style.visibility = "hidden";
-
+    weatherContainer.hide()
     if (!localStorage.getItem("prevSearches")) {
         savedSearched = [];
     } else {
@@ -241,7 +211,7 @@ function init() {
         mySavedScore = []
         console.log(mySavedScore)
     } else { mySavedScore = JSON.parse(localStorage.getItem("scoreCard")) }
-            // populate your saved score array with the contents from local storage, using scoreCard as the key name
+    // populate your saved score array with the contents from local storage, using scoreCard as the key name
 
     render()
     renderCities();
@@ -261,12 +231,9 @@ async function saveSearch(event) {
     //now we want to save the data and also send the data to an array and display it
     zipCode = currentSearch.cityText;
     srchRadius = currentSearch.radiusText;
-    //We want to clear these variables so that they are empty if we call a new city
-    // nextForecast = [];
-    // futureArray = [];
+
     storeCities()
     renderCities();
-    //add lines functions that call API and display the information
 }
 function storeCities() {
     localStorage.setItem("prevSearches", JSON.stringify(savedSearched));
@@ -417,10 +384,8 @@ function render() {
 }
 //display everything by calling the init 
 init()
-submitButton.click(scorecard)
 searchBtn.click(searchResults);
 // searchContainerEl.on("click", "button", prevSearchResults);
-var weatherContainer = $("#weatherContainer")
 function searchResults(event) {
     saveSearch(event)
     geoAPI().then(function (res) {
@@ -428,6 +393,7 @@ function searchResults(event) {
         console.log(userLat)
         console.log(userLong)
     })
+    weatherContainer.show()
 }
 
 function prevSearchResults(event) {
