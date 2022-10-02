@@ -1,6 +1,6 @@
 # Golf All
 
-## Descriptio
+## Description
 The site is used for avid golfers who want to find or explore their local golf courses. It has a schedule function and shows the weather for the next few days to plan your next golf session.
 ## Installation
 N/A
