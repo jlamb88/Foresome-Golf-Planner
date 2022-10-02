@@ -388,6 +388,7 @@ var prevBtnEl = $("#savedCities")
 prevBtnEl.on("click", "button", prevSearchResults)
 // searchContainerEl.on("click", "button", prevSearchResults);
 function searchResults(event) {
+
     saveSearch(event)
     geoAPI().then(function (res) {
         golfAPI(res);
