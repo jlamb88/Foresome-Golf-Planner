@@ -29,9 +29,11 @@ p {
     font-size: 16px;
 }
 
-.carousel-inner, .carousel-item.active {
-    height:350px;
+.carousel-inner,
+.carousel-item.active {
+    height: 350px;
     object-fit: cover;
+}
 
 
 #card-URL {
@@ -91,6 +93,3 @@ p {
     flex-direction: row;
     padding-left: 25%;
 }
-
-
-/* @media screen and (max-width: 768px) */
