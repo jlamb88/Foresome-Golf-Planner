@@ -138,9 +138,10 @@ var parEl = $('#par')
 var strokesEl = $('#strokes')
 var scoreContainerEl = $('#scoreContainer')
 var submitButton = $('#submit')
-var mySavedScore = []
+var mySavedScore = [];
 function scorecard() {
     //lets do the calculation for the score here
+    console.log(mySavedScore)
     var score = parseInt(strokesEl.val()) - parseInt(parEl.val());
     if (score < 0) {
         var trueScore = (score + " under par");
@@ -159,12 +160,14 @@ function scorecard() {
 
     if ((myScore.course !== '') && (myScore.strokes !== '') && (myScore.coursePar !== '')) {
         console.log('was true')
+        console.log(mySavedScore)
+        console.log(typeof mySavedScore)
         mySavedScore.push(myScore)
 
         storeScore()
         renderScore()
-    }
 
+    }
 }
 function storeScore() {
     localStorage.setItem("scoreCard", JSON.stringify(mySavedScore))
@@ -172,16 +175,15 @@ function storeScore() {
 
 
 function renderScore() {
+    scoreContainerEl.empty()
     for (var i = 0; i < mySavedScore.length; i++) {
-        var scoreText = ("course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].trueScoreEl)
+        var scoreText = ("course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].score)
         var scoreList = $("<li></li>")
         scoreList.text(scoreText);
         scoreList.addClass('w-100');
         scoreContainerEl.append(scoreList)
     }
 }
-
-//Charlee note: rename all variables and formatting once the HTML is built
 
 function init() {
     //when the page loads we hide the weather display since they have yet to search for things
@@ -199,10 +201,12 @@ function init() {
         savedEvents = JSON.parse(localStorage.getItem("mySavedEvents"))
     }
     if (!localStorage.getItem("scoreCard")) {
-        mySavedScore = ''
+        mySavedScore = []
+        console.log(mySavedScore)
     } else { mySavedScore = JSON.parse(localStorage.getItem("scoreCard")) }
     render()
     renderCities();
+    renderScore()
 }
 
 async function saveSearch(event) {
