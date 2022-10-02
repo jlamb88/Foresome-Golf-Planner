@@ -10,7 +10,7 @@ body {
 
 header {
     /* display: flex; */
-    height:350px;
+    height: 350px;
 
     width: 100%;
     font-family: Arial, Helvetica, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', sans-serif;
@@ -29,8 +29,9 @@ p {
     font-size: 16px;
 }
 
-.carousel-inner, .carousel-item.active {
-    height:350px;
+.carousel-inner,
+.carousel-item.active {
+    height: 350px;
     display: flex;
     object-fit: fill;
 }
@@ -80,7 +81,8 @@ p {
 #savedCities {
     list-style: none;
 }
-.w-100 {
+
+#scoreContainer li {
     display: flex;
     flex-direction: row;
     padding-left: 25%;
