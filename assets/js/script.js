@@ -391,7 +391,9 @@ function render() {
 }
 
 function searchResults(event) {
-
+    //we want to empty out the previous results before a new one
+    $('#courses-results').empty()
+    $('#courses-bar').empty()
     saveSearch(event)
     geoAPI().then(function (res) {
         golfAPI(res);
@@ -400,6 +402,9 @@ function searchResults(event) {
 }
 
 function prevSearchResults(event) {
+    //we want to empty out the previous results before a new one
+    $('#courses-results').empty()
+    $('#courses-bar').empty()
     extractCity(event)
     geoAPI().then(function (res) {
         golfAPI(res);
