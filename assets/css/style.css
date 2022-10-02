@@ -73,6 +73,11 @@ p {
 #savedCities {
     list-style: none;
 }
+.w-100 {
+    display: flex;
+    flex-direction: row;
+    padding-left: 25%;
+}
 
 
 /* @media screen and (max-width: 768px) */

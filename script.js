@@ -20,7 +20,7 @@ var cityInputEl = $('#cityInput');
 var radInputEl = $('#distanceInput');
 var searchContainerEl = $("#savedCities")
 var prevDistance;
-var savedSearched = []
+var savedSearched = [];
 
 // for (i=0;i<tempArry.length;i++) {
 //          coursesArry.push(tempArry[i])
@@ -31,6 +31,7 @@ var savedSearched = []
 // var distArray = []; //Array of Objects that only contain the name and the zipcode from the first call
 // for(var i = 0; i < tempArry.length; i++) {
 //     distArray.push({name: tempArry[i].name, zip_code: tempArry[i].zip_code});
+
 
 // var srchRadius = 5;
 // var userLat = 33.749;
@@ -48,6 +49,51 @@ const listOptions = {
 function golfAPI(res) {
     var passURL = "https://golf-course-finder.p.rapidapi.com/courses?radius=" + srchRadius + "&lat=" + userLat + "&lng=" + userLong
 
+fetch(passURL, listOptions)
+    .then(response => response.json())
+    .then(function (response) {
+        var coursesList = response.courses;
+        console.log("first fetch", coursesList)
+        var endResults = []; //This will contain the information of the second fetch call
+        for (var i = 0; i < coursesList.length; i++) {
+            var courseObj = { "name": coursesList[i].name, "distance": coursesList[i].distance }
+            endResults.push(secondUrlFetchCall(coursesList[i]));
+            console.log(endResults);
+            var distanceP = document.createElement('p');
+            distanceP.textContent = coursesList.distance;
+        }
+
+        function secondUrlFetchCall(input) {
+            console.log(input);
+            const crseOptions =
+            {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '913df6397fmsh03cd288e42a6810p17e0eejsnef8826802277',
+                    'X-RapidAPI-Host': 'golf-course-finder.p.rapidapi.com'
+                }
+            };
+
+            var nameQuery = input.name.split(' ').join("%20");
+            var zipCodeQuery = input.zip_code;
+            fetchURL = 'https://golf-course-finder.p.rapidapi.com/course/details?zip=' + zipCodeQuery + '&name=' + nameQuery;
+            console.log(fetchURL);
+            fetch(fetchURL, crseOptions)
+                .then(response => response.json())
+                .then(function (response) {
+                    console.log(response);
+                    return response;
+                    // var courseAddr = response.course_details.result.formatted_address
+                    // var courseHTML = response.course_details.result.website
+                    // console.log(courseAddr, courseHTML)
+                    // var rsltsObject = {"address": courseAddr,"website": courseHTML}
+                    // console.log(rsltsObject);
+                }
+                )
+                .catch(err => console.error(err));
+        };
+    }
+    )
     console.log("golfAPI running")
     fetch(passURL, listOptions)
         .then(response => response.json())
@@ -111,6 +157,7 @@ var api_key = "c530c463eb236ecc331331c6c541cb4c315ecb3"
 
 console.log('Inside script.js');
 //c530c463eb236ecc331331c6c541cb4c315ecb3
+
 async function geoAPI() {
     console.log("geoAPI Running")
     let geo = fetch('https://api.geocod.io/v1.7/geocode?q=' + zipCode + '&api_key=' + api_key + '')
@@ -137,41 +184,76 @@ var courseEl = $('#course')
 var parEl = $('#par')
 var strokesEl = $('#strokes')
 var scoreContainerEl = $('#scoreContainer')
-var submitButton = $('#submit')
-var mySavedScore = [];
-function scorecard() {
-    //lets do the calculation for the score here
-    console.log(mySavedScore)
+var submitScoreButton = $('#submit')
+var mySavedScore = []
+
+function checkScore() {
     var score = parseInt(strokesEl.val()) - parseInt(parEl.val());
     if (score < 0) {
-        var trueScore = (score + " under par");
+        return score + " under par";
     }
     else {
-        var trueScore = (score + " over par");
-    }
-    myScore = {
-        course: courseEl.val(),
-        strokes: parseInt(strokesEl.val()),
-        coursePar: parseInt(parEl.val()),
-        score: trueScore
-    }
-    console.log(myScore)
-    console.log(typeof myScore.strokes)
-
-    if ((myScore.course !== '') && (myScore.strokes !== '') && (myScore.coursePar !== '')) {
-        console.log('was true')
-        console.log(mySavedScore)
-        console.log(typeof mySavedScore)
-        mySavedScore.push(myScore)
-
-        storeScore()
-        renderScore()
-
+        return score + " over par";
     }
 }
-function storeScore() {
-    localStorage.setItem("scoreCard", JSON.stringify(mySavedScore))
+
+function createScoreCard() {
+    // run your function to get scores from local storage
+
+    var course = courseEl.val();
+    var strokes = parseInt(strokesEl.val());
+    var coursePar = parseInt(parEl.val());
+    var score = checkScore();
+
+    if (course && strokes && coursePar && score) {
+        // create your score object
+        var myScoreObj = {
+            course,
+            strokes,
+            coursePar,
+            score
+        }
+        // push your score object to your array
+        mySavedScore.push(myScoreObj);
+        // saved your scores array to local storage
+        storeScores(mySavedScore);
+        // call your renderScore functin
+        renderScore();
+
+    } else {
+        alert("Please enter course, score, strokes, & par");
+    }
 }
+
+function storeScores(scoresArray) {
+    localStorage.setItem("scoreCard", JSON.stringify(scoresArray))
+}
+
+function getScores () {
+    var existingScores = JSON.parse(localStorage.getItem("scoreCard"));
+    if(!existingScores) {
+        return;
+    } else {
+        mySavedScore = mySavedScore.concat(existingScores);
+        // mySavedScore += existingScores; // mySavedScore = mySavedScore + existingScores
+    }
+}
+
+function renderScore() {
+    scoreContainerEl.empty()
+    
+        // iterate through your saved score array
+        for (var i = 0; i < mySavedScore.length; i++) {
+            var scoreText = ("Course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].score)
+            var scoreList = $("<li></li>")
+            scoreList.text(scoreText);
+            scoreList.addClass('w-100');
+            scoreContainerEl.append(scoreList);
+        }
+    }
+
+
+submitScoreButton.on("click", createScoreCard);
 
 
 function renderScore() {
@@ -204,6 +286,8 @@ function init() {
         mySavedScore = []
         console.log(mySavedScore)
     } else { mySavedScore = JSON.parse(localStorage.getItem("scoreCard")) }
+            // populate your saved score array with the contents from local storage, using scoreCard as the key name
+
     render()
     renderCities();
     renderScore()
