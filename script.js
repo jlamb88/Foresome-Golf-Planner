@@ -147,7 +147,6 @@ function checkScore() {
 
 function createScoreCard() {
     // run your function to get scores from local storage
-    getScores();
 
     var course = courseEl.val();
     var strokes = parseInt(strokesEl.val());
@@ -189,21 +188,18 @@ function getScores () {
 }
 
 function renderScore() {
-    if (!localStorage.getItem("scoreCard")) {
-        return;
-    } else {
-        // populate your saved score array with the contents from local storage, using scoreCard as the key name
-        mySavedScore = JSON.parse(localStorage.getItem("scoreCard"));
+    scoreContainerEl.empty()
+    
         // iterate through your saved score array
         for (var i = 0; i < mySavedScore.length; i++) {
-            var scoreText = ("course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].score)
+            var scoreText = ("Course: " + mySavedScore[i].course + ": Score: " + mySavedScore[i].score)
             var scoreList = $("<li></li>")
             scoreList.text(scoreText);
             scoreList.addClass('w-100');
             scoreContainerEl.append(scoreList);
         }
     }
-}
+
 
 submitScoreButton.on("click", createScoreCard);
 
@@ -223,6 +219,13 @@ function init() {
     } else {
         savedSearched = JSON.parse(localStorage.getItem("prevSearches"));
     }
+    if (!localStorage.getItem("scoreCard")) {
+        return;
+    } else {
+        // populate your saved score array with the contents from local storage, using scoreCard as the key name
+        mySavedScore = JSON.parse(localStorage.getItem("scoreCard"));
+    }
+    renderScore();
     renderCities();
 }
 
