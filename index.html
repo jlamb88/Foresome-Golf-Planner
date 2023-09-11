@@ -10,118 +10,95 @@
   <link rel="stylesheet" href="./assets/css/reset.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
-  <title>Duffers Unite - Your Easy Golf Planner</title>
+  <title>Foresome - Your Easy Golf Planner</title>
 
 </head>
 
 
 
 <body class="container-fluid">
-  <section class="row" id="title">
-    <h3>Duffers United</h1>
+  <section class="row p-2 ml-4" id="title">
+    <h1>Foresome</h1>
   </section>
 
-  <gutter class="row" id="gutter-left">
-    <section class="col-1"></section>
-  </gutter>
-
-  <main class="container-fluid" id="main-section">
-    <header class="container-fluid">
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="./assets/images/golfsplash1.jpg" class="d-block w-100" alt="..." height="350px">
-          </div>
-          <div class="carousel-item">
-            <img src="./assets/images/golfsplash2.jpg" class="d-block w-100" alt="..." height="350px">
-          </div>
-          <div class="carousel-item">
-            <img src="./assets/images/golfsplash3.jpg" class="d-block w-100" alt="..." height="350px">
-          </div>
-          <div class="carousel-item">
-            <img src="./assets/images/golfsplash4.jpg" class="d-block w-100" alt="..." height="350px">
-          </div>
+  <header class="container-fluid">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="./assets/images/golfsplash1.jpg" class="d-block w-100" alt="..." height="350px">
+        </div>
+        <div class="carousel-item">
+          <img src="./assets/images/golfsplash2.jpg" class="d-block w-100" alt="..." height="350px">
+        </div>
+        <div class="carousel-item">
+          <img src="./assets/images/golfsplash3.jpg" class="d-block w-100" alt="..." height="350px">
+        </div>
+        <div class="carousel-item">
+          <img src="./assets/images/golfsplash4.jpg" class="d-block w-100" alt="..." height="350px">
         </div>
       </div>
-      </div>
-    </header>
+    </div>
+    </div>
+  </header>
+
+  <main class="container-fluid" id="main-section">
+    <gutter class="col-1" id="gutter-left">
+    </gutter>
+    
 
     <section class="container-fluid">
-      <section class="row">
+      <section class="col-10">
 
-        <section class="col-3" id="sidebar">
+        <section class="col-2" id="sidebar">
           <section class="inputContainer">
-            <input class="w-100 mb-2" id="cityInput" placeholder="Location (zip code or city)" />
+            <input class="w-100 my-4" id="cityInput" placeholder="Zip code or city" />
             <input class="w-100" id="distanceInput" placeholder="Search radius (mi.)" />
             <button class="w-100" id="searchBtn">Search</button>
             <p>Previous Searches</p>
             <ul class="my-2 w-100" id="savedCities"></ul>
           </section>
-          <section class="column" id="scoreinput">
-            <input id="course" placeholder="Course Initials">
-            <input id="par" placeholder="Enter Course Par">
-            <input id="strokes" placeholder="Enter Stroke Count">
-            <button id="submit">Submit</button>
-          </section>
-          <section class="row" id="scoreCard">
-            <ul class="mx-2" id="scoreContainer"></ul>
-          </section>
         </section>
-        <section class="col-9" id="main-content">
-
-
-          <section class="container" id="weatherContainer">
-            <section class="row" id="location">
-              <h2 class="text-center" id="where">Your Location</h2>
+        
+        <section class="col-10" id="main-content">
+          <weather-info class="col-9">
+            <today class="row border-3 border-dark mt-3 mb-2">
+              <section class="col-2" id="city-icon"></section>
+              <section class="col-10 mt-5">
+                <date-conditions class="col">
+                <today-date class="mb-3">
+                </today-date>
+                <section class="row">
+                  <heading class="col-2 pl-2 ml-4">
+                  </heading>
+                  <dataCon class="col-2">
+                    <ul id="data"></ul>
+                  </dataCon>
+                  <!-- <description class="col-8 pl-3 bl-2 border-dark">
+                    <h1>Weather Conditions</h1>
+                  </description> -->
+                </section>
+                </date-conditions>
             </section>
-            <section class="row">
-              <div class="col-4 card" id="todayWeather">
-                <div class="container">
-                  <h3 class="todayDate"></h3>
-                  <img id="todayIcon" src="https://cdn-icons-png.flaticon.com/128/1163/1163624.png" alt="cloudy icon">
-                  <p id="todayTemp">Temperature: 73°</p>
-                  <p id="todayWind">Wind Speed: 10mph</p>
-                  <p id="todayHumid">Humidity: 49%</p>
-                </div>
-              </div>
-              <div class="col-4 card" id="tomorrowWeather">
-                <div class="container">
-                  <h3 class="tomorrowDate"></h3>
-                  <img id="todayIcon" src="https://cdn-icons-png.flaticon.com/128/1163/1163661.png"
-                    alt="Partly cloudy Icon">
-                  <p id="todayTemp">Temperature: 76°</p>
-                  <p id="todayWind">Wind Speed: 15mph</p>
-                  <p id="todayHumid">Humidity: 57%</p>
-                </div>
-              </div>
-              <div class="col-4 card" id="afterTomorrowWeather">
-                <div class="container">
-                  <h3 class="afterTomorrowDate"></h3>
-                  <img id="todayIcon" src="https://cdn-icons-png.flaticon.com/128/4814/4814268.png" alt="Sunny Icon">
-                  <p id="todayTemp">Temperature: 76°</p>
-                  <p id="todayWind">Wind Speeds: 13mph</p>
-                  <p id="todayHumid">Humidity: 63%</p>
-                </div>
-              </div>
-            </section>
-          </section>
+            </today>
+            <future class="row cols-5">
+            </future>
+          </weather-info>
 
           <section class="container" id="courses-search">
             <section class="row" id="courses-bar"></section>
             <section class="row" id="courses-results"></section>
           </section>
-          <section class="container" id="scheduleContainer">
-            <section class="row">
-              <h4 class="text-center">Your Schedule</h4>
-            </section>
-            <section class="row">
-              <section class="col-4" id="todayCalContainter">
+          <section class="row">
+            
+            <h4 class="row text-center">Your Calendar</h4>
+            <section class="row" id="scheduleContainer">
+              <!-- <section class="col-4" id="todayCalContainter">
                 <p class="todayDate">today</p>
                 <section class="row" id="9">
                   <p class="col-2 hour">9am</p>
@@ -264,22 +241,22 @@
                   <input data-num="27" class="col-8 time-block" id="5pmEvent" />
                   <button class="saveBtn" id="save5">Save</button>
                 </section>
-              </section>
+              </section> -->
             </section>
+
           </section>
 
-        </section>
-        </content>
-        <footer class="footer">
-          <p>
-          <h6>&copy; Pirate Dog Creative Studio</h6>
-          </p>
-        </footer>
+        </section> 
+
+        <gutter class="col-1" id="gutter-right">
+        </gutter>
   </main>
 
-  <gutter class="row" id="gutter-right">
-    <section class="col-1"></section>
-  </gutter>
+  <footer class="footer">
+    <p>
+    <h6>&copy; Pirate Dog Creative Studio</h6>
+    </p>
+  </footer>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
