@@ -115,8 +115,8 @@ function weatherSearch(loc) {
                 let temp = Math.round(weather.temp)
                 let wind = Math.round(weather.wind)
                 var newCard = $("<card>", {
-                    class: "col card m-2",
-                    style: "height: 20rem",
+                    class: "card mr-2",
+                    style: "height: 18rem",
                     html:
                         `<div class="card-body"><h5 class="card-title">${weekday}</h5><div class="mb-4" id="card-icon"><img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" class="card-img" alt="weather icon"></div><ul class="card-text" id="day-dtls"><li>Temp: ${temp}<sup>o</sup></li><li>Humidity: ${weather.humidity}%</li><li>Wind: ${wind} mph</li></ul></div>`,
                 });
@@ -128,8 +128,8 @@ function weatherSearch(loc) {
                 let temp = Math.round(weather.temp)
                 let wind = Math.round(weather.wind)
                 var newCard = $("<card>", {
-                    class: "col card m-2",
-                    style: "height: 20rem",
+                    class: "card mr-2",
+                    style: "height: 18rem",
                     html:
                         `<div class="card-body"><h5 class="card-title">${weekday}</h5><div class="mb-4" id="card-icon"><img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" class="card-img" id="card-icon" alt="weather icon"></div><ul class="card-text" id="day-dtls"><li>Temp: ${temp}<sup>o</sup></li><li>Humidity: ${weather.humidity}%</li><li>Wind: ${wind} mph</li></ul></div>`,
                 });
@@ -443,7 +443,7 @@ for (n = 7; n < 18; n++) {
         hourTime = n + 'pm';
     }
 
-    var schedRow = '<section class="row" id ="schedule-row"></section>';
+    var schedRow = '<section class="schedrow row" id ="schedule-row"></section>';
     containerEl.append(schedRow);
     currentRow = $("section").last()
     currentRow.append('<section class="col-1 hour" id="hour">' + hourTime + '</section>')
