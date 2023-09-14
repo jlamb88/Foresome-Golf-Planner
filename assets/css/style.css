@@ -5,19 +5,16 @@
 }
 
 body {
-    background-color: #dcdcd6;
+    background-color: #ecf1f6;
+    font-family: Helvetica;
 }
 
 header {
     /* display: flex; */
-    height: 350px;
-
+    height: 500px;
     width: 100%;
     font-family: Arial, Helvetica, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', sans-serif;
-    background-color: #153a18;
-    color: #ffffff;
-    background-size: cover;
-    object-fit: fill;
+    background-color: #add5af;
 }
 
 a {
@@ -29,12 +26,38 @@ p {
     font-size: 16px;
 }
 
-.carousel-inner,
-.carousel-item.active {
-    height: 350px;
-    object-fit: cover;
+ul {
+    list-style-type: none;
 }
 
+li {
+    margin-top: 4px;
+}
+#title h1 {
+    font-size: 72px;
+    font-weight: 700;
+}
+
+span {
+    color:#0c430f;
+    font-weight: 800;
+    font-variant: small-caps;
+}
+.carousel-inner,
+.carousel-item.active {
+    width:100%;
+    height: 500px;
+    /* object-fit: cover; */
+}
+
+
+weather-info {
+    margin-left: 1.4em;
+}
+#city-icon h2 {
+    font-size: 18px;
+    font-weight: 500;
+}
 
 #card-URL {
     position: absolute;
@@ -42,10 +65,17 @@ p {
     left: 15px;
 }
 
-
 #card-image {
     width: 100%;
     height: 10rem;
+}
+
+.card-img {
+    width:70%;
+    height: 6rem;
+}
+.card-text {
+    font-size: 15px;
 }
 
 .float-left {
@@ -58,6 +88,57 @@ p {
     margin-left: 25px;
 }
 
+.description {
+    white-space: pre-wrap;
+  }
+  
+  .time-block {
+    text-align: center;
+    border-radius: 1.5em;
+  }
+  
+  .schedrow {
+    white-space: pre-wrap;
+    height: 40px;
+    border-top: 1px solid white;
+  }
+  
+  .hour {
+    background-color: #ffffff;
+    color: #000000;
+    border-top: 1px dashed #000000;
+    padding-top: 1em;
+  }
+  
+  .past {
+    background-color: #d3d3d3;
+    color: black;
+  }
+  
+  .present {
+    background-color: #ff6961;
+    color: white;
+  }
+  
+  .future {
+    background-color: #77dd77;
+    color: white;
+  }
+  
+  .saveBtn {
+    height: 40px;
+    border-left: 1px solid black;
+    border-top-right-radius: 1.5em;
+    border-bottom-right-radius: 1.5em;
+    background-color: #06aed5;
+    color: white;
+  }
+  
+  .saveBtn i:hover {
+    font-size: 2rem;
+    transition: all 0.3s ease-in-out;
+  }
+  
 
 .footer {
     padding: 30px;
@@ -70,26 +151,7 @@ p {
     font-size: 20px;
 }
 
-#scoreinput {
-    display: flex;
-    flex-direction: column;
-    padding-top: 300px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
-
-}
-
-#scoreContainer {
-    padding-left: 10px;
-    list-style: none;
-}
-
 #savedCities {
     list-style: none;
 }
 
-#scoreContainer li {
-    display: flex;
-    flex-direction: row;
-    padding-left: 25%;
-}
