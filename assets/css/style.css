@@ -5,16 +5,13 @@
 }
 
 body {
-    background-color: #ecf1f6;
+    background-color: #f5f5f5;
     font-family: Helvetica;
 }
 
 header {
-    /* display: flex; */
     height: 500px;
     width: 100%;
-    font-family: Arial, Helvetica, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', sans-serif;
-    background-color: #add5af;
 }
 
 a {
@@ -33,9 +30,11 @@ ul {
 li {
     margin-top: 4px;
 }
+
 #title h1 {
-    font-size: 72px;
-    font-weight: 700;
+    font-size: 60px;
+    font-weight: 500;
+    margin-bottom: -4px;
 }
 
 span {
@@ -43,17 +42,22 @@ span {
     font-weight: 800;
     font-variant: small-caps;
 }
+
 .carousel-inner,
 .carousel-item.active {
     width:100%;
     height: 500px;
-    /* object-fit: cover; */
+    object-fit: cover;
 }
 
+gutter {
+    width: 25px;
+}
 
 weather-info {
     margin-left: 1.4em;
 }
+
 #city-icon h2 {
     font-size: 18px;
     font-weight: 500;
@@ -92,49 +96,55 @@ weather-info {
     white-space: pre-wrap;
   }
   
-  .time-block {
+.time-block {
     text-align: center;
     border-radius: 1.5em;
   }
   
-  .schedrow {
+.schedrow {
     white-space: pre-wrap;
     height: 40px;
     border-top: 1px solid white;
   }
   
-  .hour {
+.hour {
     background-color: #ffffff;
     color: #000000;
     border-top: 1px dashed #000000;
     padding-top: 1em;
   }
   
-  .past {
+.past {
     background-color: #d3d3d3;
     color: black;
   }
   
-  .present {
+.present {
     background-color: #ff6961;
     color: white;
   }
   
-  .future {
+.future {
     background-color: #77dd77;
     color: white;
   }
+
+textarea {
+    display: flex;
+    line-height: normal;
+    align-items: center;
+  }
   
-  .saveBtn {
+.saveBtn {
     height: 40px;
     border-left: 1px solid black;
-    border-top-right-radius: 1.5em;
-    border-bottom-right-radius: 1.5em;
+    border-top-right-radius: 1.2em;
+    border-bottom-right-radius: 1.2em;
     background-color: #06aed5;
     color: white;
   }
   
-  .saveBtn i:hover {
+.saveBtn i:hover {
     font-size: 2rem;
     transition: all 0.3s ease-in-out;
   }

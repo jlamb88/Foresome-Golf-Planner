@@ -3,13 +3,12 @@
 
 <head>
 
-
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="Description" content="Enter your description here" />
+  <meta name="Foresome" content="Easy golf planner" />
   <link rel="stylesheet" href="./assets/css/reset.css">
-  <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
   <title>Foresome - Your Easy Golf Planner</title>
 
 </head>
@@ -17,18 +16,18 @@
 
 
 <body class="container-fixed">
-  <section class="ml-3 p-2" id="title">
+  <section class="ml-3 mb-0 p-2" id="title">
     <h1><span>Fore</span>some</h1>
     <h4 class="ml-4" style="font-variant: small-caps">The easy integrated golf planner</h4>
   </section>
 
   <header>
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
@@ -50,12 +49,12 @@
 
   <main class="container-fluid">
       <section class="row">
-      <gutter class="col-1"></gutter>
-      <section class="col-10" id=""main-content">
+      <gutter></gutter>
+      <section class="col-11" id=""main-content">
         <section class="row">
         <section class="col-2" id="sidebar">
           <section class="mt-4">
-            <!-- <label class="'mt-3" >Location</label> -->
+            <label class="'mt-3" ><h5>Course Search</h5></label>
             <input class="w-100 mb-2" id="cityInput" placeholder="Zip code or city" />
             <!-- <label>Distance</label> -->
             <input class="w-100" id="distanceInput" placeholder="Search radius (mi.)" />
@@ -67,7 +66,8 @@
         
         <section class="col-10">
           <weather-info class="col-9">
-            <today class="row b-3 mt-3 mb-2">
+            <h2 style= "font-weight: 700">Weather Info</h2>
+            <today class="row mt-3 mb-2">
               <section class="col-2" id="city-icon"></section>
               <section class="col-10 mt-5">
                 <date-conditions class="col">
@@ -95,156 +95,10 @@
             <section class="row" id="courses-results"></section>
           </section>
           <section style="margin-top: 1.6em">
-            <h4 class="text-center">Your Calendar</h4>
+            <h4 class="ml-4">Your Calendar</h4>
             <section class="container-fixed"id="scheduleContainer">
-              <!-- <section class="col-4" id="todayCalContainter">
-                <p class="todayDate">today</p>
-                <section class="row" id="9">
-                  <p class="col-2 hour">9am</p>
-                  <input data-num="1" class="col-8 time-block" id="9amEvent" />
-                  <button class="saveBtn" id="save9">Save</button>
-                </section>
-                <section class="row" id="10">
-                  <p class="col-2 hour">10am</p>
-                  <input data-num="2" class="col-8 time-block" id="10amEvent" />
-                  <button class="saveBtn" id="save10">Save</button>
-                </section>
-                <section class="row" id="11">
-                  <p class="col-2 hour" class="hour">11am</p>
-                  <input data-num="3" class="col-8 time-block" id="11amEvent" />
-                  <button class="saveBtn" id="save11">Save</button>
-                </section>
-                <section class="row" id="12">
-                  <p class="col-2 hour">12pm</p>
-                  <input data-num="4" class="col-8 time-block" id="12pmEvent" />
-                  <button class="saveBtn" id="save12">Save</button>
-                </section>
-                <section class="row" id="1">
-                  <p class="col-2 hour">1PM</p>
-                  <input data-num="5" class="col-8  time-block" id="1pmEvent" />
-                  <button class="saveBtn" id="save1">Save</button>
-                </section>
-                <section class="row" id="2">
-                  <p class="col-2 hour" class="hour">2PM</p>
-                  <input data-num="6" class="col-8 time-block" id="2pmEvent" />
-                  <button class="saveBtn" id="save2">Save</button>
-                </section>
-                <section class="row" id="3">
-                  <p class="col-2 hour">3PM</p>
-                  <input data-num="7" class="col-8 time-block" id="3pmEvent" />
-                  <button class="saveBtn" id="save3">Save</button>
-                </section>
-                <section class="row" id="4">
-                  <p class="col-2 hour">4PM</p>
-                  <input data-num="8" class="col-8  time-block" id="4pmEvent" />
-                  <button class="saveBtn" id="save4">Save</button>
-                </section>
-                <section class="row" id="5">
-                  <p class="col-2 hour" class="hour">5pm</p>
-                  <input data-num="9" class="col-8 time-block" id="5pmEvent" />
-                  <button class="saveBtn" id="save5">Save</button>
-                </section>
-              </section>
-              <section class="col-4" id="tomorrowCalContainter">
-                <p class="tomorrowDate">tomorrow</p>
-                <section class="row" id="9">
-                  <p class="col-2 hour">9AM</p>
-                  <input data-num="10" class="col-8 time-block" id="9amEvent" />
-                  <button class="saveBtn" id="save9">Save</button>
-                </section>
-                <section class="row" id="10">
-                  <p class="col-2 hour">10AM</p>
-                  <input data-num="11" class="col-8  time-block" id="10amEvent" />
-                  <button class="saveBtn" id="save10">Save</button>
-                </section>
-                <section class="row" id="11">
-                  <p class="col-2 hour" class="hour">11AM</p>
-                  <input data-num="12" class="col-8 time-block" id="11amEvent" />
-                  <button class="saveBtn" id="save11">Save</button>
-                </section>
-                <section class="row" id="12">
-                  <p class="col-2 hour">12PM</p>
-                  <input data-num="13" class="col-8 time-block" id="12pmEvent" />
-                  <button class="saveBtn" id="save12">Save</button>
-                </section>
-                <section class="row" id="1">
-                  <p class="col-2 hour">1PM</p>
-                  <input data-num="14" class="col-8  time-block" id="1pmEvent" />
-                  <button class="saveBtn" id="save1">Save</button>
-                </section>
-                <section class="row" id="2">
-                  <p class="col-2 hour" class="hour">2PM</p>
-                  <input data-num="15" class="col-8 time-block" id="2pmEvent" />
-                  <button class="saveBtn" id="save2">Save</button>
-                </section>
-                <section class="row" id="3">
-                  <p class="col-2 hour">3PM</p>
-                  <input data-num="16" class="col-8 time-block" id="3pmEvent" />
-                  <button class="saveBtn" id="save3">Save</button>
-                </section>
-                <section class="row" id="4">
-                  <p class="col-2 hour">4PM</p>
-                  <input data-num="17" class="col-8  time-block" id="4pmEvent" />
-                  <button class="saveBtn" id="save4">Save</button>
-                </section>
-                <section class="row" id="5">
-                  <p class="col-2 hour" class="hour">5pm</p>
-                  <input data-num="18" class="col-8 time-block" id="5pmEvent" />
-                  <button class="saveBtn" id="save5">Save</button>
-                </section>
-              </section>
-              <section class="col-4" id="afterTomCalContainter">
-                <p class="afterTomorrowDate">tomorrow</p>
-                <section class="row" id="9">
-                  <p class="col-2 hour">9AM</p>
-                  <input data-num="19" class="col-8 time-block" id="9amEvent" />
-                  <button class="saveBtn" id="save9">Save</button>
-                </section>
-                <section class="row" id="10">
-                  <p class="col-2 hour">10AM</p>
-                  <input data-num="20" class="col-8  time-block" id="10amEvent" />
-                  <button class="saveBtn" id="save10">Save</button>
-                </section>
-                <section class="row" id="11">
-                  <p class="col-2 hour" class="hour">11AM</p>
-                  <input data-num="21" class="col-8 time-block" id="11amEvent" />
-                  <button class="saveBtn" id="save11">Save</button>
-                </section>
-                <section class="row" id="12">
-                  <p class="col-2 hour">12PM</p>
-                  <input data-num="22" class="col-8 time-block" id="12pmEvent" />
-                  <button class="saveBtn" id="save12">Save</button>
-                </section>
-                <section class="row" id="1">
-                  <p class="col-2 hour">1PM</p>
-                  <input data-num="23" class="col-8  time-block" id="1pmEvent" />
-                  <button class="saveBtn" id="save1">Save</button>
-                </section>
-                <section class="row" id="2">
-                  <p class="col-2 hour" class="hour">2PM</p>
-                  <input data-num="24" class="col-8 time-block" id="2pmEvent" />
-                  <button class="saveBtn" id="save2">Save</button>
-                </section>
-                <section class="row" id="3">
-                  <p class="col-2 hour">3PM</p>
-                  <input data-num="25" class="col-8 time-block" id="3pmEvent" />
-                  <button class="saveBtn" id="save3">Save</button>
-                </section>
-                <section class="row" id="4">
-                  <p class="col-2 hour">4PM</p>
-                  <input data-num="26" class="col-8  time-block" id="4pmEvent" />
-                  <button class="saveBtn" id="save4">Save</button>
-                </section>
-                <section class="row" id="5">
-                  <p class="col-2 hour" class="hour">5pm</p>
-                  <input data-num="27" class="col-8 time-block" id="5pmEvent" />
-                  <button class="saveBtn" id="save5">Save</button>
-                </section>
-              </section> -->
             </section>
-
           </section>
-
         </section> 
       </section>
     </section>

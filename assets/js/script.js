@@ -4,6 +4,7 @@
 var weatherContainer = $("#weatherContainer")
 //variables for search bar and containers
 var searchBtn = $('#searchBtn');
+var prevBtn = $('#prevSrchBtn')
 var cityInputEl = $('#cityInput');
 var radInputEl = $('#distanceInput');
 var searchContainerEl = $("#savedCities")
@@ -14,7 +15,7 @@ var savedSearched = [];
 var userLat;
 var userLong;
 var userProx;
-var api_key = 'c530c463eb236ecc331331c6c541cb4c315ecb3' || process.env.GEO_API_KEY
+var api_key = 'c530c463eb236ecc331331c6c541cb4c315ecb3'
 
 //date variables
 var today = moment();
@@ -23,20 +24,13 @@ $(".tomorrowDate").text(moment().add((1), 'days').format('dddd, MMMM Do YYYY'))
 $('.afterTomorrowDate').text(moment().add((2), 'days').format('dddd, MMMM Do YYYY'))
 
 //schedule variables and buttons
-var saveBtnEl = $("#scheduleContainer")
-saveBtnEl.on("click", "button", saveEvent)
-allInput = $(".time-block")
 searchBtn.click(searchResults);
-
-//now we are looking for a single click on any button
-// searchContainerEl.on("click", "button", prevSearchResults);
-
-//button
 
 
 $("#searchBtn").click(() =>
     weatherSearch($("#cityInput").val())
 )
+
 
 
 function weatherSearch(loc) {
@@ -58,6 +52,7 @@ function weatherSearch(loc) {
     $('#data').empty()
     $('future').empty()
     $('#city-icon').empty()
+    $('heading').empty()
     $('today-date').empty()
     $('#srch-list').empty()
 
@@ -107,18 +102,16 @@ function weatherSearch(loc) {
                 .local()
                 .format("HH");
             let startT = 9 - Math.floor((startHour - 12) / 3);
-            console.log(startDt, startHour, startT)
-            console.log(data)
             for (pos = startT; pos < 40; pos += 8) {
                 let weather = createWeatherObj({ ...data.list[pos], location: data.city.name })
                 let weekday = moment.utc(weather.date, "YYYY-MM-DD HH:mm:ss").local().format("ddd");
                 let temp = Math.round(weather.temp)
                 let wind = Math.round(weather.wind)
                 var newCard = $("<card>", {
-                    class: "card mr-2",
-                    style: "height: 18rem",
+                    class: "card mr-3",
+                    style: "height: 16rem",
                     html:
-                        `<div class="card-body"><h5 class="card-title">${weekday}</h5><div class="mb-4" id="card-icon"><img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" class="card-img" alt="weather icon"></div><ul class="card-text" id="day-dtls"><li>Temp: ${temp}<sup>o</sup></li><li>Humidity: ${weather.humidity}%</li><li>Wind: ${wind} mph</li></ul></div>`,
+                        `<div class="card-body"><h5 class="card-title">${weekday}</h5><div class="mb-2" id="card-icon"><img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" class="card-img" alt="weather icon"></div><ul class="card-text" id="day-dtls"><li>Temp: ${temp}<sup>o</sup></li><li>Humidity: ${weather.humidity}%</li><li>Wind: ${wind} mph</li></ul></div>`,
                 });
                 $("future").append(newCard);
             }
@@ -128,10 +121,10 @@ function weatherSearch(loc) {
                 let temp = Math.round(weather.temp)
                 let wind = Math.round(weather.wind)
                 var newCard = $("<card>", {
-                    class: "card mr-2",
-                    style: "height: 18rem",
+                    class: "card mr-3",
+                    style: "height: 16rem",
                     html:
-                        `<div class="card-body"><h5 class="card-title">${weekday}</h5><div class="mb-4" id="card-icon"><img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" class="card-img" id="card-icon" alt="weather icon"></div><ul class="card-text" id="day-dtls"><li>Temp: ${temp}<sup>o</sup></li><li>Humidity: ${weather.humidity}%</li><li>Wind: ${wind} mph</li></ul></div>`,
+                        `<div class="card-body"><h5 class="card-title">${weekday}</h5><div class="mb-2" id="card-icon"><img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" class="card-img" id="card-icon" alt="weather icon"></div><ul class="card-text" id="day-dtls"><li>Temp: ${temp}<sup>o</sup></li><li>Humidity: ${weather.humidity}%</li><li>Wind: ${wind} mph</li></ul></div>`,
                 });
                 $("future").append(newCard);
 
@@ -165,7 +158,6 @@ function golfAPI(res) {
     fetch(passURL, listOptions)
         .then(response => response.json())
         .then(async function (response) {
-            console.log(response)
             var coursesList = response.courses;
             courseResultsCount = '<br>' + coursesList.length + ' courses meet your search criteria<br>';
             $('#courses-bar').append('<h6>' + courseResultsCount + '</h6></br>');
@@ -194,7 +186,6 @@ function golfAPI(res) {
                 fetch(fetchURL, crseOptions)
                     .then(response => response.json())
                     .then(function (response) {
-                        console.log(response)
                         var courseAddress = response.course_details.result.formatted_address
                         var courseURL = response.course_details.result.website
                         var placesImgKey = 'AIzaSyDwPSRdwH9WbRXsdvun20zY-AuIQhzuqeU' //Google Places API key
@@ -217,8 +208,7 @@ function golfAPI(res) {
         )
 }
 
-async function geoAPI() {
-    console.log("geoAPI Running")
+async function geoAPI(zipCode) {
     let geo = fetch('https://api.geocod.io/v1.7/geocode?q=' + zipCode + '&api_key=' + api_key + '')
         .then(response => {
             var parsedData = response.json();
@@ -271,15 +261,17 @@ function renderCities() {
         //lets add the all of the previous cities as buttons
         var searchText = savedSearched[i].cityText + ' - ' + savedSearched[i].radiusText + " mile(s)";
 
-        var prevBtn = $("<button></button>");
-        var btnContainer = $("<li></li>");
+        var prevBtn = $('<button id="prevSrchBtn"></button>');
+        var btnContainer = $('<li></li>');
 
         prevBtn.text(searchText);
         prevBtn.addClass('w-100')
         btnContainer.append(prevBtn);
         searchContainerEl.append(btnContainer);
-    }
+        prevBtn.click(prevSearchResults)
+            ;
 
+    }
 }
 
 function extractCity(event) {
@@ -287,106 +279,12 @@ function extractCity(event) {
     var cityInput = event.currentTarget.innerHTML;
     var cityInputParse = cityInput.split(' ')
     //lets split the innerText of the HTML by spaces, and then extract the city/zipcode and radius, since they're all uniform
-    zipCode = cityInputParse[1];
-    srchRadius = cityInputParse[3]
+    zipCode = cityInputParse[0];
+    srchRadius = cityInputParse[2]
 
     return zipCode, srchRadius;
 }
 
-function saveEvent(event) {
-    event.preventDefault()
-    //now we prevent default and the new variable newInput will reference the previousElementSibling of pressed button
-    var newInput = event.target.previousElementSibling
-    // now we want to use switch to determine what the data-num was, and log the input in the aprorpriate cell of the array
-    switch (newInput.dataset.num) {
-        case "1":
-            savedEvents[0] = newInput.value;
-            break;
-        case "2":
-            savedEvents[1] = newInput.value;
-            break;
-        case "3":
-            savedEvents[2] = newInput.value;
-            break;
-        case "4":
-            savedEvents[3] = newInput.value;
-            break;
-        case "5":
-            savedEvents[4] = newInput.value;
-            break;
-        case "6":
-            savedEvents[5] = newInput.value;
-            break;
-        case "7":
-            savedEvents[6] = newInput.value;
-            break;
-        case "8":
-            savedEvents[7] = newInput.value;
-            break;
-        case "9":
-            savedEvents[8] = newInput.value;
-            break;
-        case "10":
-            savedEvents[9] = newInput.value;
-            break;
-        case "11":
-            savedEvents[10] = newInput.value;
-            break;
-        case "12":
-            savedEvents[11] = newInput.value;
-            break;
-        case "13":
-            savedEvents[12] = newInput.value;
-            break;
-        case "14":
-            savedEvents[13] = newInput.value;
-            break;
-        case "15":
-            savedEvents[14] = newInput.value;
-            break;
-        case "16":
-            savedEvents[15] = newInput.value;
-            break;
-        case "17":
-            savedEvents[16] = newInput.value;
-            break;
-        case "18":
-            savedEvents[17] = newInput.value;
-            break;
-        case "19":
-            savedEvents[18] = newInput.value;
-            break;
-        case "20":
-            savedEvents[19] = newInput.value;
-            break;
-        case "21":
-            savedEvents[20] = newInput.value;
-            break;
-        case "22":
-            savedEvents[21] = newInput.value;
-            break;
-        case "23":
-            savedEvents[22] = newInput.value;
-            break;
-        case "24":
-            savedEvents[23] = newInput.value;
-            break;
-        case "25":
-            savedEvents[24] = newInput.value;
-            break;
-        case "26":
-            savedEvents[25] = newInput.value;
-            break;
-        case "27":
-            savedEvents[26] = newInput.value;
-            break;
-
-    }
-    //now we want to save it in our local storage
-    localStorage.setItem("mySavedEvents", JSON.stringify(savedEvents));
-    //and render it 
-    render();
-}
 
 
 function render() {
@@ -395,7 +293,6 @@ function render() {
 
     //for the length of the buttons (all buttons) we will loop here
     for (a = 0; a < allInput.length; a++) {
-        console.log(savedEvents[a])
         //and lets put those values in the input boxes
         allInput[a].value = savedEvents[a]
     }
@@ -406,7 +303,7 @@ function searchResults(event) {
     $('#courses-results').empty()
     $('#courses-bar').empty()
     saveSearch(event)
-    geoAPI().then(function (res) {
+    geoAPI(zipCode).then(function (res) {
         golfAPI(res);
     })
     weatherContainer.show()
@@ -417,15 +314,12 @@ function prevSearchResults(event) {
     $('#courses-results').empty()
     $('#courses-bar').empty()
     extractCity(event)
-    geoAPI().then(function (res) {
+    weatherSearch(zipCode)
+    geoAPI(zipCode).then(function (res) {
         golfAPI(res);
-        console.log(userLat)
-        console.log(userLong)
         weatherContainer.show()
     })
 }
-//display everything by calling the init 
-init()
 
 var now = moment();
 $('#currentDay').text(now.format("dddd MMM Do, YYYY"));
@@ -446,13 +340,13 @@ for (n = 7; n < 18; n++) {
     var schedRow = '<section class="schedrow row" id ="schedule-row"></section>';
     containerEl.append(schedRow);
     currentRow = $("section").last()
-    currentRow.append('<section class="col-1 hour" id="hour">' + hourTime + '</section>')
+    currentRow.append('<section class="col hour" id="hour">' + hourTime + '</section>')
 
     currentRow.append('<textarea id="appt" data-time="' + hourTime + '"></textarea>')
     apptText = localStorage.getItem(hourTime);
     $("#appt", currentRow).text(apptText)
 
-    currentRow.append('<button type="button" class="saveBtn col-1" id="' + hourTime + '">save</button>')
+    currentRow.append('<button type="button" class="saveBtn col" id="' + hourTime + '">save</button>')
     $("button", currentRow).click(function () {
         var apptTime = $(this).attr("id")
         var apptText = $(this).siblings("#appt").val();
@@ -470,3 +364,6 @@ for (n = 7; n < 18; n++) {
         currentAppt.attr("class", "col-10 present description")
     }
 }
+
+//display everything by calling the init 
+init()
